@@ -10,3 +10,5 @@ liveWPC_main_window(){
 	setLocationRelativeTo(null);
 }
 }
+
+
