@@ -1,53 +1,49 @@
 package liveWPCGui;
 
 public interface liveWPC_property_base{
-	//‰Šú’l
+	//åˆæœŸå€¤
 	public static final int DEFAULT_NUMBER = 0;
 
-	//ƒJƒ‰[ƒpƒŒƒbƒg‚ð•\Ž¦‚·‚é
-	//}Œ`A•¶Žš—ñ‹¤’Ê
+	//ã‚«ãƒ©ãƒ¼ãƒ‘ãƒ¬ãƒƒãƒˆã‚’è¡¨ç¤ºã™ã‚‹
+	//å›³å½¢ã€æ–‡å­—åˆ—å…±é€š
 	public default void color_settings(){}
 
 
-	//“§‰ß“x‚ÌƒpƒŒƒbƒg‚ð•\Ž¦‚·‚é
-	//}Œ`A•¶Žš—ñ‹¤’Ê
+	//é€éŽåº¦ã®ãƒ‘ãƒ¬ãƒƒãƒˆã‚’è¡¨ç¤ºã™ã‚‹
+	//å›³å½¢ã€æ–‡å­—åˆ—å…±é€š
 
 	public default void ganma_settings(){}
 
 
-	//ƒXƒ‰ƒCƒ_[‚ð•\Ž¦‚·‚é
-	//}Œ`A•¶Žš—ñ‹¤’Ê
-	//ˆø”:ƒXƒ‰ƒCƒ_[‚Ìƒ^ƒCƒv(“§‰ß“xAƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘¬“xA}Œ`‚âƒtƒHƒ“ƒg‚ÌƒTƒCƒYc‚È‚Ç)
+	//ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹
+	//å›³å½¢ã€æ–‡å­—åˆ—å…±é€š
+	//å¼•æ•°:ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼ã®ã‚¿ã‚¤ãƒ—(é€éŽåº¦ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é€Ÿåº¦ã€å›³å½¢ã‚„ãƒ•ã‚©ãƒ³ãƒˆã®ã‚µã‚¤ã‚ºâ€¦ãªã©)
 
 	public default void size_settings(int type,int geometry_number){}
 
 
-	//ƒtƒHƒ“ƒg‚ðÝ’è‚·‚é
-	//ƒeƒLƒXƒgŒÀ’è
-	//ˆø”:ƒtƒHƒ“ƒg–¼
+	//ãƒ•ã‚©ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹
+	//ãƒ†ã‚­ã‚¹ãƒˆé™å®š
+	//å¼•æ•°:ãƒ•ã‚©ãƒ³ãƒˆå
 	public default void font_settings(String font_name){}
 
 
-	//ƒtƒHƒ“ƒgƒTƒCƒYŽw’è‚ð•\Ž¦‚·‚éƒƒ\ƒbƒhB
-	//ƒeƒLƒXƒgŒÀ’è
-	//ˆø”:Žw’è‚·‚éƒtƒHƒ“ƒg‚ª“ü‚Á‚½ƒeƒLƒXƒg‚ÌƒIƒuƒWƒFƒNƒg
+	//ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºæŒ‡å®šã‚’è¡¨ç¤ºã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ã€‚
+	//ãƒ†ã‚­ã‚¹ãƒˆé™å®š
+	//å¼•æ•°:æŒ‡å®šã™ã‚‹ãƒ•ã‚©ãƒ³ãƒˆãŒå…¥ã£ãŸãƒ†ã‚­ã‚¹ãƒˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//public default void fontsize_settings(object obj){}
 
-	//ƒAƒNƒVƒ‡ƒ“ƒgƒŠƒK[AƒAƒjƒ[ƒVƒ‡ƒ“ƒgƒŠƒK[—˜—p‚Ì—L–³ƒ`ƒFƒbƒNƒ{ƒbƒNƒX
-	//}Œ`A•¶Žš—ñ‹¤’Ê
-	//ˆø”:‚Ç‚¿‚ç‚ÌƒgƒŠƒK[‚©‚ð”»•Ê‚·‚é‚½‚ß‚Ì”
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãƒˆãƒªã‚¬ãƒ¼ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒˆãƒªã‚¬ãƒ¼åˆ©ç”¨ã®æœ‰ç„¡ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
+	//å›³å½¢ã€æ–‡å­—åˆ—å…±é€š
+	//å¼•æ•°:ã©ã¡ã‚‰ã®ãƒˆãƒªã‚¬ãƒ¼ã‹ã‚’åˆ¤åˆ¥ã™ã‚‹ãŸã‚ã®æ•°
 
 	public default void trigger_check(int checker){}
 
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘I‘ðƒvƒ‹ƒ_ƒEƒ“‚ð•\Ž¦
-	//ˆø”:ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì”Ô†
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é¸æŠžãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã‚’è¡¨ç¤º
+	//å¼•æ•°:ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç•ªå·
 
 	public default void animation_settings(){}
-
-
-
-
 
 
 }

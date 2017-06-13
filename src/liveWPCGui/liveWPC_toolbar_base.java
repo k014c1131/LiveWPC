@@ -1,34 +1,34 @@
 package liveWPCGui;
 
 public interface liveWPC_toolbar_base {
-	//‰Šú’l
+	//åˆæœŸå€¤
 	public static final int Default_number = 0;
 
 
-	//}Œ`ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½Žž‚ÌƒAƒNƒVƒ‡ƒ“
-	//}Œ`ˆê——‚ð•\Ž¦‚·‚é
+	//å›³å½¢ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸæ™‚ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//å›³å½¢ä¸€è¦§ã‚’è¡¨ç¤ºã™ã‚‹
 	public default void geometry_display(){}
 
-	//}Œ`ˆê——‚©‚çŠY“–‚·‚é}Œ`‚ð‘I‘ð‚³‚ê‚½ê‡‚ÌƒAƒNƒVƒ‡ƒ“
-	//ƒƒCƒ“‰æ–Ê‚É‚»‚Ì}Œ`‚ð•\Ž¦‚·‚é
-	//ˆø”’l‚Å‚Ç‚Ì}Œ`‚©”»’f‚·‚é
-	//‰Šú’l‚Í³•ûŒ`
+	//å›³å½¢ä¸€è¦§ã‹ã‚‰è©²å½“ã™ã‚‹å›³å½¢ã‚’é¸æŠžã•ã‚ŒãŸå ´åˆã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ãƒ¡ã‚¤ãƒ³ç”»é¢ã«ãã®å›³å½¢ã‚’è¡¨ç¤ºã™ã‚‹
+	//å¼•æ•°å€¤ã§ã©ã®å›³å½¢ã‹åˆ¤æ–­ã™ã‚‹
+	//åˆæœŸå€¤ã¯æ­£æ–¹å½¢
 	public default int selected_geometry(){	return Default_number;}
 
-	//ƒAƒCƒRƒ“ƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½Žž‚ÌƒAƒNƒVƒ‡ƒ“
-	//ƒAƒCƒRƒ“ˆê——‚ð•\Ž¦‚·‚é
+	//ã‚¢ã‚¤ã‚³ãƒ³ãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸæ™‚ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ã‚¢ã‚¤ã‚³ãƒ³ä¸€è¦§ã‚’è¡¨ç¤ºã™ã‚‹
 	public default void icon_display(){}
 
-	//ƒAƒCƒRƒ“ˆê——‚©‚çŠY“–‚·‚éƒAƒCƒRƒ“‚ð‘I‘ð‚³‚ê‚½ê‡‚ÌƒAƒNƒVƒ‡ƒ“
-	//ƒƒCƒ“‰æ–Ê‚É‚»‚ÌƒAƒCƒRƒ“‚ð•\Ž¦‚·‚é
-	//ˆø”’l‚Å‚Ç‚ÌƒAƒCƒRƒ“‚©”»’f‚·‚é
-	//‰Šú’l‚Í“V‹C(Todo:—v‹l‚ß)
+	//ã‚¢ã‚¤ã‚³ãƒ³ä¸€è¦§ã‹ã‚‰è©²å½“ã™ã‚‹ã‚¢ã‚¤ã‚³ãƒ³ã‚’é¸æŠžã•ã‚ŒãŸå ´åˆã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ãƒ¡ã‚¤ãƒ³ç”»é¢ã«ãã®ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤ºã™ã‚‹
+	//å¼•æ•°å€¤ã§ã©ã®ã‚¢ã‚¤ã‚³ãƒ³ã‹åˆ¤æ–­ã™ã‚‹
+	//åˆæœŸå€¤ã¯å¤©æ°—(Todo:è¦è©°ã‚)
 	public default int selected_icon(){ return Default_number; }
 
 
-	//ƒeƒLƒXƒgƒ{ƒ^ƒ“‚ð‰Ÿ‚³‚ê‚½Žž‚ÌƒAƒNƒVƒ‡ƒ“
-	//‰æ–Ê‚ÉƒeƒLƒXƒg‚ð•\Ž¦‚·‚é
-	//‰Šú’l‚Í[helloWorld](todo:—v‹l‚ß)
+	//ãƒ†ã‚­ã‚¹ãƒˆãƒœã‚¿ãƒ³ã‚’æŠ¼ã•ã‚ŒãŸæ™‚ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
+	//ç”»é¢ã«ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹
+	//åˆæœŸå€¤ã¯[helloWorld](todo:è¦è©°ã‚)
 
 	public default void selected_text(){}
 
