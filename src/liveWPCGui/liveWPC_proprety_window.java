@@ -143,7 +143,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base{
 
 					JComboBox animemotion = new JComboBox(animemotiondata);
 						animemotion.setEditable(true);
-						animemotion.setPreferredSize(new Dimension(50, 30));
+						animemotion.setPreferredSize(new Dimension(70, 30));
 						p8.add(animemotionlabel);
 						p8.add(animemotion);
 
