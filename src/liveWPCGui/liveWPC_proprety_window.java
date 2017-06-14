@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class liveWPC_proprety_window extends liveWPC_window_base{
+public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base{
 
 	String[] textsizedata = {"18", "24", "30", "36"};
 	String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
