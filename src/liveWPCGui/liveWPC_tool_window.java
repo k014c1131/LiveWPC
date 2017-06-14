@@ -22,6 +22,7 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 	private JButton imagebutton;
 	private JButton bt4;
 	private JPanel toolpanel;
+	private ImageIcon icon;
 	private ImageIcon geometryicon;
 	private ImageIcon texticon;
 	private ImageIcon imageicon;
@@ -35,14 +36,10 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 		//toolbar.setSize(50,10);
 		toolbar.setVisible(true);
 
-		geometryicon = new ImageIcon("img/icon1.png");//アイコンの変数作成
-		texticon = new ImageIcon("img/icon2.png");//アイコンの変数作成
-		imageicon = new ImageIcon("img/imageicon.jpg");//アイコンの変数作成
-		icon4 = new ImageIcon("img/icon4.png");//アイコンの変数作成
-		geometryicon= imageResize(geometryicon);
-		texticon = imageResize(texticon);
-		imageicon = imageResize(imageicon);
-		icon4 = imageResize(icon4);
+		geometryicon = imageResize("img/icon1.png");//アイコンの変数作成
+		texticon = imageResize("img/icon2.png");//アイコンの変数作成
+		imageicon = imageResize("img/imageicon.jpg");//アイコンの変数作成
+		icon4 = imageResize("img/icon4.png");//アイコンの変数作成
 
 		geometrybutton = new JButton(geometryicon);
 		geometrybutton = setButtonSize(geometrybutton);
@@ -50,37 +47,40 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
 						toolpanel.removeAll();//ツールバーの中身を削除
-						ToolIconAdd(new ImageIcon("img/en.png"),toolpanel);
-						ToolIconAdd(new ImageIcon("img/shikaku.png"),toolpanel);
-						ToolIconAdd(new ImageIcon("img/chouhoukei.png"),toolpanel);
-						ToolIconAdd(new ImageIcon("img/sankaku.png"),toolpanel);
+						ToolIconAdd("img/en.png");
+						ToolIconAdd("img/shikaku.png");
+						ToolIconAdd("img/chouhoukei.png");
+						ToolIconAdd("img/sankaku.png");
 
-						toolpanel.revalidate();//ツール画面全体を更新
-						//toolpanel.repaint();//ツール画面全体を更新
+						toolpanel.revalidate();//ツール一覧の表示を更新
+						repaint();//ツール画面全体を更新
 					}
 				}
 				);											 //ここまで
 		toolbar.add(geometrybutton);
 
-		textbutton = new JButton(texticon);
+		textbutton = new JButton(imageResize(texticon));
 		textbutton = setButtonSize(textbutton);
+		toolbar.add(textbutton);
 		textbutton.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
 						toolpanel.removeAll();//ツールバーの中身を削除
-						ToolIconAdd(texticon,toolpanel);
+						ToolIconAdd("img/icon2.png");
 						toolpanel.revalidate();//ツール画面全体を更新
+						repaint();
+
 					}
 				}
 				);										 //ここまで
-		toolbar.add(textbutton);
 
-		imagebutton = new JButton(imageicon);
+
+		imagebutton = new JButton(imageResize(imageicon));
 		imagebutton = setButtonSize(imagebutton);
 		toolbar.add(imagebutton);
 
 
-		bt4 = new JButton(icon4);
+		bt4 = new JButton(imageResize(icon4));
 		bt4 = setButtonSize(bt4);
 		toolbar.add(bt4);
 
@@ -91,8 +91,7 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 			toolpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 			ImageIcon testicon = new ImageIcon("img/icon1.png");//アイコンの変数作成
-			ToolIconAdd(testicon,toolpanel);
-
+			ToolIconAdd("img/icon1.png");
 
 
 
@@ -108,15 +107,31 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
 	}
+	public ImageIcon imageResize(String str){
+		icon = new ImageIcon(str);
+		Image img = icon.getImage() ;//画像を読み込み
+		Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
+		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
+		return icon;
+	}
 	public JButton setButtonSize(JButton bt){
 		bt.setSize(20,20);
 		bt.setMargin(new Insets(0,0,0,0));
 		return bt;
 	}
-	public void ToolIconAdd(ImageIcon icon,JPanel toolpanel){
-		icon= imageResize(icon);
+	public void ToolIconAdd(String str){//ツールパネルにボタンを追加するメソッド
+
+		icon =imageResize(str);
 		button = new JButton(icon);
 		button = setButtonSize(button);
+		button.addActionListener(//ボタンごとに処理作成ここから
+				new ActionListener(){
+					public void actionPerformed(ActionEvent event){
+						liveWPC_main_window.insert_circle(str);
+					}
+				}
+				);										 //ここまで
+
 		toolpanel.add(button);
 		//toolpanel.repaint();
 		//toolpanel.removeAll();
