@@ -5,31 +5,38 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-public class liveWPC_create_object  extends JPanel{
+public class liveWPC_create_object  extends JLabel{
 
-		  private JLabel label;
-		  private ImageIcon icon1;
+
+
 
 		  liveWPC_create_object(){
 
-		    icon1 = new ImageIcon("./img/en.png");
-
-		    label = new JLabel(icon1);
-
+		    setIcon(new ImageIcon("./img/en.png"));
 		    // 座標指定
 		    setLayout(null);
-		    label.setBounds(0, 0, 100, 120);
+		    this.setBounds(0, 0, 100, 120);
 
 		    // リスナーを登録
 		    MyMouseListener listener = new MyMouseListener();
 		    this.addMouseListener(listener);
 		    this.addMouseMotionListener(listener);
 
-		    add(label);
-
 		  }
+		  liveWPC_create_object(String imagepath){
+
+			    setIcon(new ImageIcon(imagepath));
+			    // 座標指定
+			    setLayout(null);
+			    this.setBounds(0, 0, 100, 120);
+
+			    // リスナーを登録
+			    MyMouseListener listener = new MyMouseListener();
+			    this.addMouseListener(listener);
+			    this.addMouseMotionListener(listener);
+
+			  }
 
 		  private class MyMouseListener extends MouseAdapter{
 		    private int dx;
