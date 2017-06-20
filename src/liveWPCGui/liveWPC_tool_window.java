@@ -97,9 +97,8 @@ public class liveWPC_tool_window extends liveWPC_window_base{
 
 		getContentPane().add(toolbar,BorderLayout.CENTER);
 		getContentPane().add(toolpanel,BorderLayout.SOUTH);
-
+		//liveWPC_main_window.insert_circle();
 		setBounds(1100,100,200,500);
-		liveWPC_main_window.insert_circle();
 	}
 	public ImageIcon imageResize(ImageIcon icon){
 		Image img = icon.getImage() ;//画像を読み込み
