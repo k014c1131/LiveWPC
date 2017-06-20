@@ -5,22 +5,22 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-
 //ツールバーの各機能を持ったクラス
 //コンストラクタに変数を渡すことでどのクラスかを判別する
 public class liveWPC_create_object  extends JPanel{
 
 		  private JLabel label;
-		  private ImageIcon icon1 = new ImageIcon("./img/en.png");
+		  private ImageIcon icon;
 		  public boolean enableinfo;
 		  liveWPC_create_object(){
-		    label = new JLabel(imageResize(icon1));
+			icon = imageResize("./img/en.png");
 
-		    enableinfo = false;
-		    label.setIcon(new ImageIcon("./img/en.png"));
+		    label.setIcon(icon);
 		    // 座標指定
-		    setLayout(null);
-		    label.setBounds(0, 0, 120, 120);
+		    //this.setLayout(null);
+		    this.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+		    //this.setLocation(0, 0);
+
 		    // リスナーを登録
 		    MyMouseListener listener = new MyMouseListener();
 		    this.addMouseListener(listener);
@@ -29,11 +29,13 @@ public class liveWPC_create_object  extends JPanel{
 
 		  }
 		  liveWPC_create_object(String imagepath){
+			  icon = imageResize(imagepath);
 
-			    label.setIcon(new ImageIcon(imagepath));
+			    labels.setIcon(icon);
 			    // 座標指定
-			    setLayout(null);
-			    this.setBounds(0, 0, 100, 120);
+			    //this.setLayout(null);
+			    this.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
+			    //this.setLocation(0, 0);
 
 			    // リスナーを登録
 			    MyMouseListener listener = new MyMouseListener();
@@ -41,6 +43,13 @@ public class liveWPC_create_object  extends JPanel{
 			    this.addMouseMotionListener(listener);
 
 			  }
+			public ImageIcon imageResize(String str){
+				icon = new ImageIcon(str);
+				Image img = icon.getImage() ;//画像を読み込み
+				Image newimg = img.getScaledInstance( 100, 100,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
+				icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
+				return icon;
+			}
 
 
 		  public void onClickObject(boolean setEnable){
