@@ -13,35 +13,31 @@ import javax.swing.JTextField;
 
 public class liveWPC_proprety_window extends liveWPC_window_base{
 
-	String[] textsizedata = {"18", "24", "30", "36"};
-	String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
-	String[] triggerdata = {"タップ", "スライド", "表示"};
-	String[] animemotiondata = {"回転","スクロール","遠近","出現","消失"};
-	JComboBox textsize;
-	JComboBox font;
-	JPanel p;
-	JButton colorchange;
-	JLabel Transparencylabel;
-	JTextField Transparencytextbox;
-	JLabel heightlabel;
-	JTextField heighttextbox;
-	JLabel widthlabel;
-	JTextField widthtextbox;
-	JLabel triggerlabel;
-	JComboBox trigger;
-	JLabel applabel;
-	JCheckBox appcheckbox;
-	JLabel animespeedlabel;
-	JTextField animespeedtextbox;
-	JLabel animetimelabel;
-	JTextField animetimetextbox;
-	JLabel animemotionlabel;
-	JComboBox animemotion;
+	private String[] textsizedata = {"18", "24", "30", "36"};
+	private String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
+	private String[] triggerdata = {"タップ", "スライド", "表示"};
+	private String[] animemotiondata = {"回転","スクロール","遠近","出現","消失"};
+	private JComboBox textsize;
+	private JComboBox font;
+	private JPanel p;
+	private JButton colorchange;
+	private JLabel triggerlabel;
+	private JComboBox trigger;
+	private JLabel applabel;
+	private JCheckBox appcheckbox;
+	//private JLabel animespeedlabel;
+	private JTextField animespeedtextbox;
+	//private JLabel animetimelabel;
+	private JTextField animetimetextbox;
+	private JLabel animemotionlabel;
+	private JComboBox animemotion;
+
+	private liveWPC_create_object obj;//選択しているオブジェクトを格納
 
 	liveWPC_proprety_window(){
 
 	}
-	public void call_proprety_window(){
+	public void call_proprety_window(){//プロパティウィンドウの起動
 		textsize = create_combo_box(textsizedata);
 		textsize.setPreferredSize(new Dimension(50, 30));
 
@@ -102,7 +98,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base{
 
 
 		JPanel p6 = new JPanel();
-			animespeedlabel = new JLabel("アニメ速度：");
 
 			animespeedtextbox = new JTextField("100");
 			animespeedtextbox.setHorizontalAlignment(JTextField.CENTER);
@@ -117,7 +112,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base{
 			JPanel p7 = new JPanel();
 			p7.setPreferredSize(new Dimension(200, 90));
 
-					animetimelabel = new JLabel("継続時間：");
 
 					animetimetextbox = new JTextField("100");
 					animetimetextbox.setHorizontalAlignment(JTextField.CENTER);
@@ -174,24 +168,24 @@ public class liveWPC_proprety_window extends liveWPC_window_base{
 	}
 
 
-	public  JComboBox create_combo_box(String[] str){
+	public  JComboBox create_combo_box(String[] str){//文字列からコンボボックスを作るメソッド
 		JComboBox box = new JComboBox(str);
 		box.setEditable(true);
 		return box;
 	}
 
 
-	public void change_text_size_box(Boolean Enabled){
+	public void change_text_size_box(Boolean Enabled){//テキストサイズのボックスの有効無効を設定するメソッド
 		textsize.setEnabled(Enabled);
 	}
 
 
-	public void change_font_type_box(Boolean Enabled){
+	public void change_font_type_box(Boolean Enabled){//フォントタイプのボックスの有効無効を設定するメソッド
 		font.setEnabled(Enabled);
 	}
 
 
-	public JPanel create_textbox(String str){
+	public JPanel create_textbox(String str){//文字列からテキストフィールドとラベルの組み合わせたパーツを作るメソッド
 		JLabel label = new JLabel(str);
 		JTextField textbox = new JTextField("100");
 		textbox.setHorizontalAlignment(JTextField.CENTER);

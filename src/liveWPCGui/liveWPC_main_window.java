@@ -30,7 +30,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 		tool_window= new liveWPC_tool_window();
 		proprety_window = new liveWPC_proprety_window();
-		proprety_window.call_proprety_window(1);
+		proprety_window.call_proprety_window(1);//数字を変更することで表示する内容を変える。
 		//proprety_window.call_proprety_window(0);
 
 		panel.setPreferredSize(new Dimension(750,480));
@@ -57,19 +57,16 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	}
 	public static void insert_circle(){
 		liveWPC_create_object tc = new liveWPC_create_object();
-	    //tc.setBounds(0,0,100,100);
-	    tc.setPreferredSize(new Dimension(100,120));
 	    panel.add(tc);
 	    tc.setLocation(50, 50);
 
-	    /*g.setColor(Color.RED);
+	    /*g.setColor(Color.RED);//グラフィッククラスの試験中
         g.fillOval(50, 50, 100, 100);
         g.dispose();*/
 
 	}
-	public static void insert_circle(String imagepath){
+	public static void insert_image(String imagepath){
 		liveWPC_create_object tc = new liveWPC_create_object(imagepath);
-	    tc.setPreferredSize(new Dimension(100,120));
 	    panel.add(tc);
 	    tc.setLocation(50, 50);
 	}
