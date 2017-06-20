@@ -10,7 +10,6 @@ import javax.swing.border.LineBorder;
 
 public class liveWPC_main_window extends liveWPC_window_base{
 	private static JPanel panel = new JPanel();
-<<<<<<< HEAD
 	private JPanel border = new JPanel();
 	private liveWPC_tool_window tool_window;
 	private liveWPC_proprety_window proprety_window;
@@ -74,10 +73,4 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	    panel.add(tc);
 	    tc.setLocation(50, 50);
 	}
-public static void insert_circle(){
-	liveWPC_create_object tc = new liveWPC_create_object();
-    tc.setBounds(0,0,100,100);
-    tc.setPreferredSize(new Dimension(100,120));
-    panel.add(tc);
-}
 }
