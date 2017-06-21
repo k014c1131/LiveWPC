@@ -9,7 +9,6 @@ import javax.swing.border.*;
 //コンストラクタに変数を渡すことでどのクラスかを判別する
 public class liveWPC_create_object  extends JPanel{
 	public JLabel label;
-	public ImageIcon icon;
 	public boolean enableinfo;
 	liveWPC_create_object(){
 		label = new JLabel();
@@ -24,8 +23,6 @@ public class liveWPC_create_object  extends JPanel{
 	}
 
 	public void objectReSize(){
-		this.setSize(icon.getIconWidth(), icon.getIconHeight());
-		label.setBounds(0,0,icon.getIconWidth(), icon.getIconHeight());
 	}
 
 	public void onClickObject(boolean setEnable){

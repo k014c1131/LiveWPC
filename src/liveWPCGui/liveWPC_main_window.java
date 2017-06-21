@@ -63,7 +63,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	}
 	public static void insert_image(String imagepath){
-		liveWPC_create_object tc = new liveWPC_create_object(imagepath);
+		liveWPC_create_object tc = new liveWPC_create_image_object(imagepath);
 	    panel.add(tc);
 	    tc.setLocation(50, 50);
 	}
