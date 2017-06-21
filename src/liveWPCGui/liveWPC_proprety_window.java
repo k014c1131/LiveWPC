@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base{
+public class liveWPC_proprety_window extends liveWPC_window_base{
 
 	private String[] textsizedata = {"18", "24", "30", "36"};
 	private String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
@@ -19,7 +19,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private String[] animemotiondata = {"回転","スクロール","遠近","出現","消失"};
 	private JComboBox textsize;
 	private JComboBox font;
-	private JPanel p;
+	private JPanel p = new JPanel();
 	private JButton colorchange;
 	private JLabel triggerlabel;
 	private JComboBox trigger;
@@ -38,22 +38,14 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 
 	}
 	public void call_proprety_window(){//プロパティウィンドウの起動
-		textsize = create_combo_box(textsizedata);
-		textsize.setPreferredSize(new Dimension(50, 30));
 
-		font = create_combo_box(fontdata);
-		font.setPreferredSize(new Dimension(100, 30));
 
-		p = new JPanel();
-		p.setPreferredSize(new Dimension(200, 80));
-		p.add(font,BorderLayout.WEST);
-		p.add(textsize,BorderLayout.CENTER);
+
+
 
 		colorchange = new JButton();
 		colorchange.setBackground(Color.RED);
 		colorchange.setPreferredSize(new Dimension(20, 20));
-
-
 
 	JPanel p2 = new JPanel();
 		p2.setPreferredSize(new Dimension(200, 40));
@@ -155,12 +147,13 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 
 	public void call_proprety_window(int i){//エントリーポイント
 		if(i==0){
+			create_text_proprety();
 			call_proprety_window();//文字の時
 		}
 		if(i==1){
 			call_proprety_window();//画像の時
-			change_text_size_box(false);
-			change_font_type_box(false);
+			//change_text_size_box(false);
+			//change_font_type_box(false);
 		}
 		if(i==2){
 			call_proprety_window();//図形の時
@@ -194,6 +187,20 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	 	p.add(label,BorderLayout.LINE_START);
 		p.add(textbox,BorderLayout.LINE_START);
 	 	return p;
+	}
+
+	public void create_text_proprety(){
+		textsize = create_combo_box(textsizedata);
+		textsize.setPreferredSize(new Dimension(50, 30));
+
+		font = create_combo_box(fontdata);
+		font.setPreferredSize(new Dimension(100, 30));
+
+		p.setPreferredSize(new Dimension(200, 80));
+		p.add(font,BorderLayout.WEST);
+		p.add(textsize,BorderLayout.CENTER);
+
+
 	}
 
 }

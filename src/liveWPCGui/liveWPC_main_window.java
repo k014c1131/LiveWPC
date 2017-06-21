@@ -1,6 +1,9 @@
 package liveWPCGui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -37,7 +40,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		panel.setLocation(FlowLayout.CENTER,200);
 		panel.setBackground(Color.WHITE);
 		panel.setVisible(true);
-		panel.add(tc,BorderLayout.CENTER);
+		//panel.add(tc,BorderLayout.CENTER);
 		panel.add(border,BorderLayout.CENTER);
 
 		//getContentPane().countComponents();
@@ -68,3 +71,5 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	    tc.setLocation(50, 50);
 	}
 }
+
+
