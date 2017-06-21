@@ -15,11 +15,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	liveWPC_main_window(){
 		//g = this.getGraphics();
-
-		tc = new liveWPC_create_object();
-		tc.setBounds(0,0,100,100);
-		tc.setPreferredSize(new Dimension(100,120));
-
 		border.setPreferredSize(new Dimension(225,400));
 		border.setOpaque(false);
 		LineBorder bordercolor = new LineBorder(Color.BLACK, 2, true);
@@ -41,7 +36,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		panel.add(border,BorderLayout.CENTER);
 
 		//getContentPane().countComponents();
-		//getContentPane().add(tc);
 		getContentPane().add(panel);
 
 
@@ -50,16 +44,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		setLocationRelativeTo(null);
 		//proprety_window.change_text_size_box(false);
 		//proprety_window.change_font_type_box(false);
-
-	}
-	public static void insert_circle(){
-		liveWPC_create_object tc = new liveWPC_create_object();
-	    panel.add(tc);
-	    tc.setLocation(50, 50);
-
-	    /*g.setColor(Color.RED);//グラフィッククラスの試験中
-        g.fillOval(50, 50, 100, 100);
-        g.dispose();*/
 
 	}
 	public static void insert_image(String imagepath){

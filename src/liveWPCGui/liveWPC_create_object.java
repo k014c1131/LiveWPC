@@ -7,9 +7,10 @@ import javax.swing.border.*;
 
 //ツールバーの各機能を持ったクラス
 //コンストラクタに変数を渡すことでどのクラスかを判別する
-public class liveWPC_create_object  extends JPanel{
-	public JLabel label;
-	public boolean enableinfo;
+public abstract class liveWPC_create_object  extends JPanel{
+	protected JLabel label;
+	protected boolean enableinfo;
+	protected int x,y;
 	liveWPC_create_object(){
 		label = new JLabel();
 		this.setBackground(new Color(0,0,0,0));
@@ -22,8 +23,7 @@ public class liveWPC_create_object  extends JPanel{
 		this.add(label);
 	}
 
-	public void objectReSize(){
-	}
+	public abstract void objectReSize();
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
@@ -48,13 +48,14 @@ public class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			int x = e.getXOnScreen() - dx;
-			int y = e.getYOnScreen() - dy;
+			x = e.getXOnScreen() - dx;
+			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
 		}
 
 		public void mousePressed(MouseEvent e) {
-			onClickObject(enableinfo);
+			//onClickObject(enableinfo);
+			setLocation(x, y);
 			objectReSize();
 			int btn = e.getButton();
 			if (btn == MouseEvent.BUTTON1){
