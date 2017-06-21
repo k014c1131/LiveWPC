@@ -32,7 +32,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		panel.setLocation(FlowLayout.CENTER,200);
 		panel.setBackground(Color.WHITE);
 		panel.setVisible(true);
-		panel.add(tc,BorderLayout.CENTER);
 		panel.add(border,BorderLayout.CENTER);
 
 		//getContentPane().countComponents();
