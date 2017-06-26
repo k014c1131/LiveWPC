@@ -19,7 +19,8 @@ public class liveWPC_create_object  extends JPanel{
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
-
+		x = 0;
+		y = 0;
 		//パネルに追加
 		this.add(label);
 	}
@@ -35,13 +36,13 @@ public class liveWPC_create_object  extends JPanel{
 			//ボーダーを青くする処理
 			LineBorder border = new LineBorder(Color.blue);
 			label.setBorder(border);
-			repaint();
+			//repaint();
 			enableinfo = true;
 		}else{
 			//ボーダーを透明化する処理
 			LineBorder border = new LineBorder(new Color(0,0,0,0));
 			label.setBorder(null);
-			repaint();
+			//repaint();
 			enableinfo = false;
 		}
 	}
