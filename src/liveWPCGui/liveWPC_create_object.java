@@ -11,6 +11,7 @@ public class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public ImageIcon icon;
 	public boolean enableinfo;
+	public int x,y;
 	liveWPC_create_object(){
 		label = new JLabel();
 		this.setBackground(new Color(0,0,0,0));
@@ -51,8 +52,8 @@ public class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			int x = e.getXOnScreen() - dx;
-			int y = e.getYOnScreen() - dy;
+			x = e.getXOnScreen() - dx;
+			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
 		}
 
@@ -70,5 +71,12 @@ public class liveWPC_create_object  extends JPanel{
 		}
 
 	}
+    @Override
+    public void paint(Graphics g){
+        setLocation(x, y);
+        super.paint(g);
+    }
+
+
 
 }
