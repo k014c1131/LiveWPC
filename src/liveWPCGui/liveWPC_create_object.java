@@ -11,6 +11,7 @@ public class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public ImageIcon icon;
 	public boolean enableinfo;
+	public int x,y;
 	liveWPC_create_object(){
 		label = new JLabel();
 		this.setBackground(new Color(0,0,0,0));
@@ -18,7 +19,8 @@ public class liveWPC_create_object  extends JPanel{
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
-
+		x = 0;
+		y = 0;
 		//パネルに追加
 		this.add(label);
 	}
@@ -34,13 +36,13 @@ public class liveWPC_create_object  extends JPanel{
 			//ボーダーを青くする処理
 			LineBorder border = new LineBorder(Color.blue);
 			label.setBorder(border);
-			repaint();
+			//repaint();
 			enableinfo = true;
 		}else{
 			//ボーダーを透明化する処理
 			LineBorder border = new LineBorder(new Color(0,0,0,0));
 			label.setBorder(null);
-			repaint();
+			//repaint();
 			enableinfo = false;
 		}
 	}
@@ -51,8 +53,8 @@ public class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			int x = e.getXOnScreen() - dx;
-			int y = e.getYOnScreen() - dy;
+			x = e.getXOnScreen() - dx;
+			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
 		}
 
@@ -70,5 +72,12 @@ public class liveWPC_create_object  extends JPanel{
 		}
 
 	}
+    @Override
+    public void paint(Graphics g){
+        setLocation(x, y);
+        super.paint(g);
+    }
+
+
 
 }
