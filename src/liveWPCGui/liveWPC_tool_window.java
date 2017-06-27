@@ -75,7 +75,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
 						toolpanel.removeAll();//ツールバーの中身を削除
-						ToolIconAdd("img/icon2.png");//ツールバーのアイコンを変更
+						ToolTextIconAdd("img/icon2.png");//ツールバーのアイコンを変更
 
 						toolpanel.revalidate();//ツール画面全体を更新
 						repaint();
@@ -112,15 +112,20 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 
 		getContentPane().add(toolbar,BorderLayout.CENTER);
 		getContentPane().add(toolpanel,BorderLayout.SOUTH);
-		//liveWPC_main_window.insert_circle();
+
 		setBounds(1100,100,200,500);
+
 	}
+
+
 	public ImageIcon imageResize(ImageIcon icon){//アイコンをサイズ調整するメソッド
 		Image img = icon.getImage() ;//画像を読み込み
 		Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
 		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
 	}
+
+
 	public ImageIcon imageResize(String str){//文字列からアイコンを作りをサイズ調整するメソッド
 		icon = new ImageIcon(str);
 		Image img = icon.getImage() ;//画像を読み込み
@@ -128,11 +133,15 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
 	}
+
+
 	public JButton setButtonSize(JButton bt){//ボタンのサイズを調整するメソッド
 		bt.setSize(20,20);
 		bt.setMargin(new Insets(0,0,0,0));
 		return bt;
 	}
+
+
 	public void ToolIconAdd(String str){//ツールパネルにボタンを追加するメソッド
 
 		icon =imageResize(str);
@@ -151,6 +160,25 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		//toolpanel.removeAll();
 
 	}
+	public void ToolTextIconAdd(String str){//ツールパネルにボタンを追加するメソッド
+
+		icon =imageResize(str);
+		button = new JButton(icon);
+		button = setButtonSize(button);
+		button.addActionListener(//ボタンごとに処理作成ここから
+				new ActionListener(){
+					public void actionPerformed(ActionEvent event){
+						liveWPC_main_window.insert_text();
+					}
+				}
+				);										 //ここまで
+
+		toolpanel.add(button);
+		//toolpanel.repaint();
+		//toolpanel.removeAll();
+
+	}
+
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==imagebutton){
@@ -173,12 +201,13 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			}
 		}
 
+
 	 public static void copyFile(File in, File out) throws IOException {
 	        FileChannel inChannel = new FileInputStream(in).getChannel();
 	        FileChannel outChannel = new FileOutputStream(out).getChannel();
 	        try {
 	            inChannel.transferTo(0, inChannel.size(),outChannel);
-	            System.out.println(out.getPath());
+	            //System.out.println(out.getPath());
 				liveWPC_main_window.insert_image(out.getPath());
 	        }
 	        catch (IOException e) {
