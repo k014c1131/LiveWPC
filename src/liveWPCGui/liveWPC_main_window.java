@@ -1,9 +1,11 @@
 package liveWPCGui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
 import javax.swing.border.LineBorder;
 
 public class liveWPC_main_window extends liveWPC_window_base{
@@ -47,14 +49,25 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		//proprety_window.change_font_type_box(false);
 
 	}
+
     @Override
     public void paint(Graphics g){
         border.setLocation(262, 0);
         super.paint(g);
     }
 	public static void insert_image(String imagepath){
-		liveWPC_create_object tc = new liveWPC_create_image_object(imagepath);
+		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath);
 	    panel.add(tc);
 	    tc.setLocation(50, 50);
 	}
+
+public static void insert_text(){
+	liveWPC_create_text_object tc = new liveWPC_create_text_object();
+    panel.add(tc);
+    tc.setLocation(50, 50);
+    tc.setMargin();
 }
+}
+
+
+
