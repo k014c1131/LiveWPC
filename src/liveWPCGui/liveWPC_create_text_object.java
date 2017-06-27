@@ -50,6 +50,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 	public void setMargin(){
 		textf.setMargin(new Insets(10,10,10,10));
 	}
-
-
+	@Override
+		public void objectReSize(){
+		}
 }
