@@ -5,6 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class liveWPC_create_image_object extends liveWPC_create_object{
+	private ImageIcon icon;
 	liveWPC_create_image_object(String imagepath){
 		super();
 		icon = imageResize(imagepath);
@@ -22,6 +23,11 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 		Image newimg = img.getScaledInstance(icon.getIconWidth(), icon.getIconHeight(),java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
 		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
+	}
+	@Override
+	public void objectReSize(){
+		this.setSize(icon.getIconWidth(), icon.getIconHeight());
+		label.setBounds(0,0,icon.getIconWidth(), icon.getIconHeight());
 	}
 
 }
