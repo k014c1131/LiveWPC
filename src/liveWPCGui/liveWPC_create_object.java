@@ -1,19 +1,25 @@
 package liveWPCGui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 //ツールバーの各機能を持ったクラス
 //コンストラクタに変数を渡すことでどのクラスかを判別する
 public abstract class liveWPC_create_object  extends JPanel{
-	protected JLabel label;
-	protected boolean enableinfo;
+	public JLabel label;
+	public boolean enableinfo;
 	protected int x,y;
+
+
 	liveWPC_create_object(){
 		label = new JLabel();
-		this.setBackground(new Color(0,0,0,0));
+		this.setLayout(new BorderLayout());
 		// リスナーを登録
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
@@ -25,25 +31,27 @@ public abstract class liveWPC_create_object  extends JPanel{
 	}
 
 	public abstract void objectReSize();
+	public abstract String returnValue();
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
+		System.out.println(returnValue());
 		if(setEnable ==false){
 			//ボーダーを青くする処理
 			LineBorder border = new LineBorder(Color.blue);
-			label.setBorder(border);
-			//repaint();
+			this.setBorder(border);
+			repaint();
 			enableinfo = true;
 		}else{
 			//ボーダーを透明化する処理
-			LineBorder border = new LineBorder(new Color(0,0,0,0));
-			label.setBorder(null);
-			//repaint();
+			this.setBorder(null);
+			repaint();
 			enableinfo = false;
 		}
 	}
 
-	private class MyMouseListener extends MouseAdapter{
+
+	protected class MyMouseListener extends MouseAdapter{
 		private int dx;
 		private int dy;
 
@@ -55,9 +63,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 		}
 
 		public void mousePressed(MouseEvent e) {
-			//onClickObject(enableinfo);
-			setLocation(x, y);
-			objectReSize();
+			onClickObject(enableinfo);
+
 			int btn = e.getButton();
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
@@ -69,12 +76,10 @@ public abstract class liveWPC_create_object  extends JPanel{
 		}
 
 	}
-    @Override
-    public void paint(Graphics g){
-        setLocation(x, y);
-        super.paint(g);
-    }
-
-
+	/*@Override
+	public void paint(Graphics g){//現在使用してない
+		setLocation(x, y);
+		super.paint(g);
+	}*/
 
 }
