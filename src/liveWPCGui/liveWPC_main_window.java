@@ -48,6 +48,12 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	}
 
+	/*@Override
+	public void paint(Graphics g){//現在使用していない
+		border.setLocation(262, 0);
+		super.paint(g);
+	}*/
+
 	public static void insert_image(String imagepath){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath);
 		panel.add(tc);

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -14,8 +13,8 @@ import javax.swing.border.LineBorder;
 //コンストラクタに変数を渡すことでどのクラスかを判別する
 public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
-	public ImageIcon icon;
 	public boolean enableinfo;
+	protected int x,y;
 
 
 	liveWPC_create_object(){
@@ -25,7 +24,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
-
+		x = 0;
+		y = 0;
 		//パネルに追加
 		this.add(label);
 	}
@@ -57,8 +57,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			int x = e.getXOnScreen() - dx;
-			int y = e.getYOnScreen() - dy;
+			x = e.getXOnScreen() - dx;
+			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
 		}
 
@@ -76,5 +76,10 @@ public abstract class liveWPC_create_object  extends JPanel{
 		}
 
 	}
+	/*@Override
+	public void paint(Graphics g){//現在使用してない
+		setLocation(x, y);
+		super.paint(g);
+	}*/
 
 }

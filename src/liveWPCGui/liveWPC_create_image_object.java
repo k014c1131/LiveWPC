@@ -5,7 +5,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class liveWPC_create_image_object extends liveWPC_create_object{
-	String imagepath;
+	private String imagepath;
+	private ImageIcon icon;
 	liveWPC_create_image_object(String imagepath){
 		super();
 		this.imagepath=imagepath;

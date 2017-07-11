@@ -43,12 +43,12 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			toolbar.setFloatable(true);
 			toolbar.setVisible(true);
 
-		geometryicon = imageResize("img/icon1.png");//アイコンの変数作成
-		texticon = imageResize("img/icon2.png");//アイコンの変数作成
-		imageicon = imageResize("img/imageicon.jpg");//アイコンの変数作成
-		saveicon = imageResize("img/icon4.png");//アイコンの変数作成
+		geometryicon	=	imageResize("img/icon1.png");//アイコンの変数作成
+		texticon	=		imageResize("img/icon2.png");//アイコンの変数作成
+		imageicon	=		imageResize("img/imageicon.jpg");//アイコンの変数作成
+		saveicon	=		imageResize("img/icon4.png");//アイコンの変数作成
 
-		geometrybutton = new JButton(geometryicon);
+		geometrybutton =	new JButton(geometryicon);
 			geometrybutton = setButtonSize(geometrybutton);
 			geometrybutton.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
