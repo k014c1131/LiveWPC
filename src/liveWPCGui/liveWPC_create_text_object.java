@@ -2,55 +2,70 @@ package liveWPCGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Insets;
 
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
 public class liveWPC_create_text_object extends liveWPC_create_object{
-	private int height = 0;
-	private int width = 0;
 
-	private JTextField textf= new JTextField();
+	private JTextArea textf= new JTextArea();
 
 	liveWPC_create_text_object(){
 		super();
 
-		this.setLayout(new BorderLayout());
+		LineBorder border = new LineBorder(Color.black);
+		textf.setBorder(border);//選択範囲の確認用
 
-		LineBorder border = new LineBorder(Color.blue);
-		this.setBorder(border);//選択範囲の確認用
-
-
-		//textf.setText("ここに入力してください。");
 		textf.setSize(200, 40);
 		MyMouseListener listener = new MyMouseListener();
 		textf.addMouseListener(listener);
 		textf.addMouseMotionListener(listener);
 
-		//label.setSize(textf.getWidth()+10, textf.getHeight()+10);
-		this.setSize(textf.getWidth(), textf.getHeight());
-		//textf.setBorder(null);
+		this.setSize(
+				textf.getWidth(),
+				textf.getHeight());
 
-
-
-
-		//textf.setOpaque(false);
-		//textf.setBorder(null);
 		textf.setVisible(true);
-		//textf.setLocation(5,5);
-		this.add(textf,BorderLayout.CENTER);
-		//label.add(textf);
-		//label.setVisible(true);
+		this.add(
+				textf,
+				BorderLayout.CENTER);
 
-
-
-
-	}
-	public void setMargin(){
-		textf.setMargin(new Insets(10,10,10,10));
 	}
 	@Override
-		public void objectReSize(){
+	public void onClickObject(boolean setEnable){
+		//このオブジェクトではlabelを使わないためメソッド内容を変更
+		//重くなるようならLineBorderはプライベート変数に
+		if(setEnable ==false){
+			//ボーダーを青くする処理
+			LineBorder border = new LineBorder(Color.blue);
+			textf.setBorder(border);
+			repaint();
+			enableinfo = true;
+		}else{
+			//ボーダーを透明化する処理
+			LineBorder border = new LineBorder(Color.black);
+			textf.setBorder(border);
+			repaint();
+			enableinfo = false;
 		}
+	}
+
+	@Override
+	public void objectReSize(){
+	}
+	@Override
+	public String returnValue() {
+		String str;
+		str =	"{\r\n"+
+				"type:TextArea\r\n"+
+				"x:"+this.getX()+"\r\n"+
+				"y:"+this.getY()+"\r\n"+
+				"width:"+this.getWidth()+"\r\n"+
+				"heigth:"+this.getHeight()+"\r\n"+
+				"String:"+textf.getText()+"\r\n"+
+				"}\r\n";
+
+		return str;
+	}
+
 }
