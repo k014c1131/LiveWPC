@@ -34,8 +34,19 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	}
 	@Override
 	public void objectReSize(){
-		this.setSize(icon.getIconWidth(), icon.getIconHeight());
-		label.setBounds(0,0,icon.getIconWidth(), icon.getIconHeight());
+		if(width == -1 && height == -1){
+			width = icon.getIconWidth();
+			height = icon.getIconHeight();
+		}
+		this.setSize(width,height);
+		label.setBounds(0,0,width, height);
+	}
+
+	@Override
+	public void onClickObject(boolean setEnable){
+		liveWPC_proprety_window.get_select_object(this,0);
+		super.onClickObject(setEnable);
+
 	}
 	@Override
 	public String returnValue() {//設定値の情報を返すメソッド

@@ -15,8 +15,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public boolean enableinfo;
 	protected int x,y;
-
-
+	protected int width = -1;
+	protected int height = -1;
 	liveWPC_create_object(){
 		label = new JLabel();
 		this.setLayout(new BorderLayout());
@@ -24,6 +24,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
+		//オブジェクト座標
 		x = 0;
 		y = 0;
 		//パネルに追加
@@ -42,6 +43,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 			this.setBorder(border);
 			repaint();
 			enableinfo = true;
+			liveWPC_proprety_window.get_object_size();
 		}else{
 			//ボーダーを透明化する処理
 			this.setBorder(null);
@@ -60,11 +62,13 @@ public abstract class liveWPC_create_object  extends JPanel{
 			x = e.getXOnScreen() - dx;
 			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
+			liveWPC_proprety_window.get_object_point();
 		}
 
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
-
+			setLocation(x, y);
+			objectReSize();
 			int btn = e.getButton();
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
