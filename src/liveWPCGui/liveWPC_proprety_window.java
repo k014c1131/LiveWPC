@@ -4,6 +4,8 @@ package liveWPCGui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -17,7 +19,7 @@ import javax.swing.UIManager;
 
 import java.util.*;
 
-public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base{
+public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base,ActionListener{
 
 
 	//プライベート変数の宣言
@@ -85,6 +87,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		p2.add(colorchange,BorderLayout.LINE_START);
 		p2.add(create_textbox("透過度：",object_alpha_value),BorderLayout.LINE_START);
 
+		object_alpha_value.addActionListener(this);
+
 		p.add(p2,BorderLayout.SOUTH);
 
 
@@ -93,12 +97,19 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		p3.add(create_textbox("高さ：",object_height),BorderLayout.LINE_START);
 		p3.add(create_textbox("幅：",object_width),BorderLayout.LINE_START);
 
+		object_height.addActionListener(this);
+		object_width.addActionListener(this);
+
+
 	 JPanel p4 = new JPanel();
 		p4.setPreferredSize(new Dimension(300, 90));
 		p4.add(create_textbox("X座標：",object_point_x),BorderLayout.LINE_START);
 		p4.add(create_textbox("Y座標：",object_point_y),BorderLayout.LINE_START);
-
 		p3.add(p4,BorderLayout.SOUTH);
+
+		object_point_x.addActionListener(this);
+		object_point_y.addActionListener(this);
+
 
 	JPanel p5 = new JPanel();
 		triggerlabel = new JLabel("起動条件：");
@@ -231,7 +242,21 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		objs.get(0).width = width;
 		objs.get(0).height = height;
 		objs.get(0).objectReSize();
+	}
 
+	public void refine_object_point(){
+		int x = new Integer(object_point_x.getText());
+		int y = new Integer(object_point_y.getText());
+		if(x > 750){
+			x = 750 - objs.get(0).width;
+		}
+		if(y > 480){
+			y = 480 - objs.get(0).height;
+		}
+		System.out.println(x+ "" +y);
+		objs.get(0).setLocation(x,y);
+		objs.get(0).x = x;
+		objs.get(0).y = y;
 	}
 	//オブジェクトから呼び出し
 	//該当のオブジェクトをプロパティウィンドウで保持するメソッド
@@ -263,8 +288,15 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		object_point_x.setText(objs.get(0).x + "");
 		object_point_y.setText(objs.get(0).y + "");
 	}
+	public void actionPerformed(ActionEvent e) {
+		System.out.println("イベント発生"
+				+ e.getSource());
+		if(e.getSource() == object_point_x || e.getSource() == object_point_y){
+			refine_object_point();
+		}
 
-
+	}
+}
 class IntegerInputVerifier extends InputVerifier {
 	  @Override public boolean verify(JComponent c) {
 	    boolean verified = false;
@@ -280,4 +312,5 @@ class IntegerInputVerifier extends InputVerifier {
 	  }
 	}
 
-}
+
+
