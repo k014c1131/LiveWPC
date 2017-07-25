@@ -32,7 +32,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 				BorderLayout.CENTER);
 
 	}
-	public liveWPC_create_text_object(int x,int y,int width,int height,String text){
+	public liveWPC_create_text_object(int width,int height,String text){
 		super();
 
 		LineBorder border = new LineBorder(Color.black);
@@ -94,7 +94,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 				"\"x\":"+this.getX()+",\r\n"+
 				"\"y\":"+this.getY()+",\r\n"+
 				"\"width\":"+this.getWidth()+",\r\n"+
-				"\"heigth\":"+this.getHeight()+",\r\n"+
+				"\"height\":"+this.getHeight()+",\r\n"+
 				"\"String\":\""+textf.getText()+"\"\r\n"+
 				"}";
 

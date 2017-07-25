@@ -42,7 +42,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	private ImageIcon saveicon;
 	private ImageIcon loadicon;
 	private File file = null;
-	private liveWPC_text_write_read tw =new liveWPC_text_write_read();
+	private liveWPC_text_write_read tw;
 	liveWPC_tool_window(){
 
 		toolbar.setBounds(10, 10, 100, 10);
@@ -171,6 +171,9 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	}
 
 	public void actionPerformed(ActionEvent e) {
+
+		tw =new liveWPC_text_write_read();
+
 		if(e.getSource()==imagebutton){						//画像挿入のメソッド
 			JFileChooser filechooser=	new JFileChooser();
 				int selected = filechooser.showOpenDialog(this);
@@ -194,11 +197,11 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 
 
 					if(file.toString().substring(file.toString().length() - 4).equals(".zip")){
-						System.out.println(file.getPath());
+						//System.out.println(file.getPath());
 					}
 					else{
-						file = new File(file+".zip");
-						System.out.println(file.getPath());
+						//file = new File(file+".zip");
+						//System.out.println(file.getPath());
 					}
 					if (file.exists() && getDialogType() == SAVE_DIALOG) {
 						//ここで上書き確認のウィンドウを表示する
@@ -222,6 +225,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					tw.setList(liveWPC_main_window.getList());
 					System.out.println(file.getPath());
 					//file.mkdir();//フォルダを作成するメソッド
+					System.out.println(file);
 					tw.saveFile(file);
 					//tw = null;	//中身を初期化(これがないと同じファイルに書き込んだ時に、
 								//上書きではなく追記になる)
@@ -236,9 +240,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				//System.out.println(file.getParent()+" "+file.getName());
 				try{
 					//tw.unzip(file.getPath(),file.getParent());
-					System.out.println(tw.readfile(file.getPath(), file.getParent()));
+					//System.out.println(tw.readfile(file.getPath(), file.getParent()));
 					String json = tw.readfile(file.getPath(), file.getParent());
-					System.out.println(json);
+					//System.out.println(json);
+					liveWPC_main_window.removeAllObject();
 
 					//String json = "{\"enableinfo\":true,\"x\":337,\"y\":60,\"imagepath\":\"img/chouhoukei.png\",\"icon\":null}";
 
@@ -246,6 +251,30 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					ObjectMapper mapper = new ObjectMapper();
 
 					List<liveWPC_text_value> list = mapper.readValue(json, new TypeReference<List<liveWPC_text_value>>() {});
+
+					for(liveWPC_text_value line : list){
+						System.out.println(line.getX()+" "+line.getY()+" "+line.getWidth()+" "+line.getHeight()+" "+line.getTextString()+line.getImagepath());
+
+						switch (line.getType()){
+						case "Image":
+							liveWPC_main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight());
+							System.out.println("非常に不満");
+							break;
+						case "TextArea":
+							liveWPC_main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString());
+							break;
+						/*case 3:
+							System.out.println("どちらとも言えない");
+							break;
+						case 4:
+							System.out.println("少し満足");
+							break;
+						case 5:
+							System.out.println("大変満足");
+							break;*/
+						}
+
+					}
 
 					System.out.println(list.get(0));
 					System.out.println(list.get(1));
@@ -276,6 +305,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				}
 			}
 		}
+		tw = null;
 	}
 
 	public void copyFile(File in, File out) throws IOException {

@@ -74,7 +74,7 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 				"\"x\":"+this.getX()+",\r\n"+
 				"\"y\":"+this.getY()+",\r\n"+
 				"\"width\":"+this.getWidth()+",\r\n"+
-				"\"heigth\":"+this.getHeight()+",\r\n"+
+				"\"height\":"+this.getHeight()+",\r\n"+
 				"\"ImagePath\":\""+this.getImagePath()+"\"\r\n"+
 				"}";
 
