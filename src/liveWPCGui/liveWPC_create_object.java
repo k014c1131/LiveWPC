@@ -32,6 +32,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 	public abstract void objectReSize();
 	public abstract String returnValue();
+	public abstract String getImagePath();
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に

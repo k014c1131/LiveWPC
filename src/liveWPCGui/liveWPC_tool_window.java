@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class liveWPC_tool_window extends liveWPC_window_base implements ActionListener{
 	private JButton button;
 	private JToolBar toolbar=new JToolBar();
@@ -29,14 +33,16 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	private JButton textbutton;
 	private JButton imagebutton;
 	private JButton savebutton;
+	private JButton loadbutton;
 	private JPanel toolpanel;
 	private ImageIcon icon;
 	private ImageIcon geometryicon;
 	private ImageIcon texticon;
 	private ImageIcon imageicon;
 	private ImageIcon saveicon;
+	private ImageIcon loadicon;
 	private File file = null;
-	private liveWPC_text_write tw;
+	private liveWPC_text_write_read tw;
 	liveWPC_tool_window(){
 
 		toolbar.setBounds(10, 10, 100, 10);
@@ -47,9 +53,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		texticon	=		imageResize("img/icon2.png");//アイコンの変数作成
 		imageicon	=		imageResize("img/imageicon.jpg");//アイコンの変数作成
 		saveicon	=		imageResize("img/icon4.png");//アイコンの変数作成
+		loadicon	=		imageResize("img/icon4.png");//アイコンの変数作成
 
-		geometrybutton =	new JButton(geometryicon);
-			geometrybutton = setButtonSize(geometrybutton);
+		geometrybutton	=	new JButton(geometryicon);
+			geometrybutton=	setButtonSize(geometrybutton);
 			geometrybutton.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
@@ -66,8 +73,8 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				);										 //処理作成ここまで
 			toolbar.add(geometrybutton);
 
-		textbutton = new JButton(imageResize(texticon));//テキストボックス挿入のボタン
-			textbutton = setButtonSize(textbutton);
+		textbutton=			new JButton(imageResize(texticon));//テキストボックス挿入のボタン
+			textbutton=	setButtonSize(textbutton);
 			toolbar.add(textbutton);
 			textbutton.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
@@ -82,17 +89,22 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				}
 				);										 //ここまで
 
-		imagebutton = new JButton(imageResize(imageicon));//画像挿入のボタン
-			imagebutton = setButtonSize(imagebutton);
+		imagebutton=		new JButton(imageResize(imageicon));//画像挿入のボタン
+			imagebutton=	setButtonSize(imagebutton);
 			imagebutton.addActionListener(this);
 			toolbar.add(imagebutton);
 
-		savebutton = new JButton(imageResize(saveicon));//その他機能のボタン
-			savebutton = setButtonSize(savebutton);
+		savebutton=			new JButton(imageResize(saveicon));//保存機能のボタン
+			savebutton=		setButtonSize(savebutton);
 			savebutton.addActionListener(this);
 			toolbar.add(savebutton);
 
-		toolpanel = new JPanel();	//ツール一覧の基本設定
+		loadbutton=			new JButton(imageResize(loadicon));//読み込み機能のボタン
+			loadbutton=		setButtonSize(loadbutton);
+			loadbutton.addActionListener(this);
+			toolbar.add(loadbutton);
+
+		toolpanel=			new JPanel();	//ツール一覧の基本設定
 			toolpanel.setPreferredSize(new Dimension(160,400));
 			toolpanel.setBackground(Color.WHITE);
 			toolpanel.setVisible(true);
@@ -111,17 +123,17 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	}
 
 	public ImageIcon imageResize(ImageIcon icon){//アイコンをサイズ調整するメソッド
-		Image img = icon.getImage() ;//画像を読み込み
-		Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
-		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
+		Image img =		icon.getImage() ;//画像を読み込み
+		Image newimg =	img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
+		icon =			new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
 	}
 
 	public ImageIcon imageResize(String str){//文字列からアイコンを作りをサイズ調整するメソッド
-		icon = new ImageIcon(str);
-		Image img = icon.getImage() ;//画像を読み込み
-		Image newimg = img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
-		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
+		icon =			new ImageIcon(str);
+		Image img =		icon.getImage() ;//画像を読み込み
+		Image newimg =	img.getScaledInstance( 20, 20,  java.awt.Image.SCALE_SMOOTH ) ;//サイズを変更
+		icon =			new ImageIcon( newimg );//サイズ変更した画像に変更する
 		return icon;
 	}
 
@@ -132,9 +144,9 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	}
 
 	public void ToolIconAdd(String str){//ツールパネルにボタンを追加するメソッド
-		icon =imageResize(str);
-		button = new JButton(icon);
-		button = setButtonSize(button);
+		icon =		imageResize(str);
+		button =	new JButton(icon);
+		button =	setButtonSize(button);
 		button.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
@@ -145,9 +157,9 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		toolpanel.add(button);
 	}
 	public void ToolTextIconAdd(String str){//ツールパネルにボタンを追加するメソッド
-		icon =imageResize(str);
-		button = new JButton(icon);
-		button = setButtonSize(button);
+		icon=		imageResize(str);
+		button =	new JButton(icon);
+		button =	setButtonSize(button);
 		button.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
@@ -159,14 +171,17 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==imagebutton){//画像挿入のメソッド
-			JFileChooser filechooser =new JFileChooser();
+
+		tw =new liveWPC_text_write_read();
+
+		if(e.getSource()==imagebutton){						//画像挿入のメソッド
+			JFileChooser filechooser=	new JFileChooser();
 				int selected = filechooser.showOpenDialog(this);
 				if(selected==JFileChooser.APPROVE_OPTION){
-					file=filechooser.getSelectedFile();//画像のファイルパスを取得
+					file=				filechooser.getSelectedFile();//画像のファイルパスを取得
 
 					try{
-						copyFile(file,new File("./tmp/"+file.getName()));
+						copyFile(file,new File("img/"+file.getName()));
 
 					}catch(IOException ex){
 						ex.printStackTrace();
@@ -174,16 +189,18 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				}
 			}
 
-		if(e.getSource()==savebutton){//ファイル保存のメソッド
+		if(e.getSource()==savebutton){						//ファイル保存のメソッド
 			JFileChooser filechooser =new JFileChooser() {
 
-				@Override public void approveSelection() {//上書き確認の処理
+				@Override public void approveSelection() {	//上書き確認の処理
 					file=getSelectedFile();//ファイルパスを取得
-					if(file.toString().substring(file.toString().length() - 4).equals(".txt")){
+
+
+					if(file.toString().substring(file.toString().length() - 4).equals(".zip")){
 						//System.out.println(file.getPath());
 					}
 					else{
-						file = new File(file+".txt");
+						//file = new File(file+".zip");
 						//System.out.println(file.getPath());
 					}
 					if (file.exists() && getDialogType() == SAVE_DIALOG) {
@@ -202,16 +219,94 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			};
 			FileNameExtensionFilter ff = new FileNameExtensionFilter(".txt(テキストファイル)", "txt");
 			filechooser.setFileFilter(ff);
-				int selected = filechooser.showSaveDialog(this);
+				int selected =	filechooser.showSaveDialog(this);
 				if(selected==JFileChooser.APPROVE_OPTION){
-					tw = new liveWPC_text_write();
+
 					tw.setList(liveWPC_main_window.getList());
+					System.out.println(file.getPath());
+					//file.mkdir();//フォルダを作成するメソッド
+					System.out.println(file);
 					tw.saveFile(file);
-					tw =null;	//中身を初期化(これがないと同じファイルに書き込んだ時に、
+					//tw = null;	//中身を初期化(これがないと同じファイルに書き込んだ時に、
 								//上書きではなく追記になる)
 				}
 			}
+		if(e.getSource()==loadbutton){							//設定ファイルの読み込みメソッド
+			JFileChooser filechooser=	new JFileChooser();
+			int selected = filechooser.showOpenDialog(this);
+			if(selected==JFileChooser.APPROVE_OPTION){
+				file=				filechooser.getSelectedFile();//zipファイルのファイルパスを取得
+
+				//System.out.println(file.getParent()+" "+file.getName());
+				try{
+					//tw.unzip(file.getPath(),file.getParent());
+					//System.out.println(tw.readfile(file.getPath(), file.getParent()));
+					String json = tw.readfile(file.getPath(), file.getParent());
+					//System.out.println(json);
+					liveWPC_main_window.removeAllObject();
+
+					//String json = "{\"enableinfo\":true,\"x\":337,\"y\":60,\"imagepath\":\"img/chouhoukei.png\",\"icon\":null}";
+
+
+					ObjectMapper mapper = new ObjectMapper();
+
+					List<liveWPC_text_value> list = mapper.readValue(json, new TypeReference<List<liveWPC_text_value>>() {});
+
+					for(liveWPC_text_value line : list){
+						System.out.println(line.getX()+" "+line.getY()+" "+line.getWidth()+" "+line.getHeight()+" "+line.getTextString()+line.getImagepath());
+
+						switch (line.getType()){
+						case "Image":
+							liveWPC_main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight());
+							System.out.println("非常に不満");
+							break;
+						case "TextArea":
+							liveWPC_main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString());
+							break;
+						/*case 3:
+							System.out.println("どちらとも言えない");
+							break;
+						case 4:
+							System.out.println("少し満足");
+							break;
+						case 5:
+							System.out.println("大変満足");
+							break;*/
+						}
+
+					}
+
+					System.out.println(list.get(0));
+					System.out.println(list.get(1));
+
+					/*String json = "{\"id\":20, \"name\":\"HOGE\"}";
+					System.out.println(json);
+					ObjectMapper mapper = new ObjectMapper();
+					Hoge hoge = mapper.readValue(json, Hoge.class);
+					System.out.println(hoge);*/
+					/*Hoge hoge = new Hoge();
+					hoge.id = 10;
+						hoge.name = "hoge";
+
+						ObjectMapper mapper = new ObjectMapper();
+						String json = mapper.writeValueAsString(hoge);
+
+						System.out.println(json);*/
+					/*String json = "[{\"id\":15, \"name\":\"hoge\"}, {\"id\":16, \"name\":\"fuga\"}]";
+
+						ObjectMapper mapper = new ObjectMapper();
+
+						List<Hoge> list = mapper.readValue(json, new TypeReference<List<Hoge>>() {});
+
+						System.out.println(list.get(0));
+						System.out.println(list.get(1));*/
+				}catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
 		}
+		tw = null;
+	}
 
 	public void copyFile(File in, File out) throws IOException {
 		FileChannel inChannel = new FileInputStream(in).getChannel();
@@ -233,4 +328,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		finally {
 		}
 	}
+
 }
+
+

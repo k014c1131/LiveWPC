@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 
 public class liveWPC_main_window extends liveWPC_window_base{
 	private static JPanel panel = new JPanel();
-	private JPanel border = new JPanel();
+	private static JPanel border = new JPanel();
 	private liveWPC_tool_window tool_window;
 	private liveWPC_proprety_window proprety_window;
 	//private liveWPC_create_object tc;
@@ -60,6 +60,12 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		tc.setLocation(50, 50);
 		list.add(tc);
 	}
+	public static void insert_image(String imagepath,int x,int y,int width,int height){
+		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height);
+		panel.add(tc);
+		tc.setLocation(x, y);
+		list.add(tc);
+	}
 
 	public static void insert_text(){
 	liveWPC_create_text_object tc = new liveWPC_create_text_object();
@@ -69,8 +75,19 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	//panel.removeAll();
 	//panel.repaint();
 	}
+	public static void insert_text(int x,int y,int width,int height,String text){
+		liveWPC_create_text_object tc = new liveWPC_create_text_object(width, height, text);
+		panel.add(tc);
+		tc.setLocation(x, y);
+		list.add(tc);
+		}
 	public static ArrayList<liveWPC_create_object> getList(){
 		return list;
+	}
+	public static void removeAllObject(){
+		panel.removeAll();
+		panel.add(border);
+		panel.repaint();
 	}
 }
 
