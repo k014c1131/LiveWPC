@@ -67,5 +67,10 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 
 		return str;
 	}
+	@Override
+	public void refinealpha() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 
 }

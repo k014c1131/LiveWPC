@@ -17,8 +17,10 @@ public abstract class liveWPC_create_object  extends JPanel{
 	protected int x,y;
 	protected int width = -1;
 	protected int height = -1;
+	protected float alpha;
 	liveWPC_create_object(){
 		label = new JLabel();
+		this.setBackground(new Color(0,0,0,0));
 		this.setLayout(new BorderLayout());
 		// リスナーを登録
 		MyMouseListener listener = new MyMouseListener();
@@ -27,12 +29,16 @@ public abstract class liveWPC_create_object  extends JPanel{
 		//オブジェクト座標
 		x = 0;
 		y = 0;
-		//パネルに追加
+		//パネルに追加;
 		this.add(label);
+
+		//透過度
+		alpha = 1;
 	}
 
 	public abstract void objectReSize();
 	public abstract String returnValue();
+	public abstract void refinealpha();
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
@@ -44,6 +50,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 			repaint();
 			enableinfo = true;
 			liveWPC_proprety_window.get_object_size();
+			liveWPC_proprety_window.get_object_point();
 		}else{
 			//ボーダーを透明化する処理
 			this.setBorder(null);
@@ -62,6 +69,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 			x = e.getXOnScreen() - dx;
 			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
+			liveWPC_proprety_window.get_object_size();
 			liveWPC_proprety_window.get_object_point();
 		}
 

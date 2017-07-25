@@ -244,15 +244,22 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		objs.get(0).objectReSize();
 	}
 
+	/*
+	 * オブジェクトの座標を入力値から変更する
+	 */
+
 	public void refine_object_point(){
 		int x = new Integer(object_point_x.getText());
 		int y = new Integer(object_point_y.getText());
+
+		//ラベルのサイズ上限値
 		if(x > 750){
 			x = 750 - objs.get(0).width;
 		}
 		if(y > 480){
 			y = 480 - objs.get(0).height;
 		}
+		//確認用座標表示
 		System.out.println(x+ "" +y);
 		objs.get(0).setLocation(x,y);
 		objs.get(0).x = x;
@@ -281,18 +288,47 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	}
 /*
  * 選択オブジェクトの座標取得メソッド
- * 座標を表示する場所がないため現在コメントアウト
+
  */
 	public static void get_object_point(){
 		System.out.println(object_height.getText());
 		object_point_x.setText(objs.get(0).x + "");
 		object_point_y.setText(objs.get(0).y + "");
 	}
+	/*
+	 * 選択オブジェクトの透過度を調整する
+	 */
+	public void refine_object_alpha(){
+		float alpha_value = 1;
+		try{
+			alpha_value = Float.parseFloat(object_alpha_value.getText());
+			System.out.println(alpha_value);
+			if(alpha_value < 0){
+				alpha_value = 0;
+				object_alpha_value.setText("0");
+			}else if(alpha_value > 100){
+				alpha_value = 100;
+				object_alpha_value.setText("100");
+			}
+			alpha_value = alpha_value / 100;
+		}catch(Exception e){
+			e.getStackTrace();
+		}
+		objs.get(0).alpha = alpha_value;
+		objs.get(0).refinealpha();
+		repaint();
+
+	}
+
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("イベント発生"
 				+ e.getSource());
 		if(e.getSource() == object_point_x || e.getSource() == object_point_y){
 			refine_object_point();
+		}else if(e.getSource() == object_alpha_value){
+			refine_object_alpha();
+		}else if(e.getSource() == object_height || e.getSource() == object_width){
+			refine_object_size();
 		}
 
 	}
