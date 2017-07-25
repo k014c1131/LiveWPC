@@ -43,8 +43,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 		setSize(750,480);
 		setLocationRelativeTo(null);
-		//proprety_window.change_text_size_box(false);
-		//proprety_window.change_font_type_box(false);
 
 	}
 

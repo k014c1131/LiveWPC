@@ -101,6 +101,10 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		return str;
 	}
 	@Override
+	public void refinealpha() {
+		// TODO 自動生成されたメソッド・スタブ
+	}
+	@Override
 	public String getImagePath() {//プログラムの仕様上必要
 		// TODO 自動生成されたメソッド・スタブ
 		return null;

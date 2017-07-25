@@ -15,23 +15,30 @@ public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public boolean enableinfo;
 	protected int x,y;
-
-
+	protected int width = -1;
+	protected int height = -1;
+	protected float alpha;
 	liveWPC_create_object(){
 		label = new JLabel();
+		this.setBackground(new Color(0,0,0,0));
 		this.setLayout(new BorderLayout());
 		// リスナーを登録
 		MyMouseListener listener = new MyMouseListener();
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
+		//オブジェクト座標
 		x = 0;
 		y = 0;
-		//パネルに追加
+		//パネルに追加;
 		this.add(label);
+
+		//透過度
+		alpha = 1;
 	}
 
 	public abstract void objectReSize();
 	public abstract String returnValue();
+	public abstract void refinealpha();
 	public abstract String getImagePath();
 
 	public void onClickObject(boolean setEnable){
@@ -43,6 +50,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 			this.setBorder(border);
 			repaint();
 			enableinfo = true;
+			liveWPC_proprety_window.get_object_size();
+			liveWPC_proprety_window.get_object_point();
 		}else{
 			//ボーダーを透明化する処理
 			this.setBorder(null);
@@ -61,11 +70,14 @@ public abstract class liveWPC_create_object  extends JPanel{
 			x = e.getXOnScreen() - dx;
 			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
+			liveWPC_proprety_window.get_object_size();
+			liveWPC_proprety_window.get_object_point();
 		}
 
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
-
+			setLocation(x, y);
+			objectReSize();
 			int btn = e.getButton();
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
