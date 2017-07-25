@@ -1,6 +1,7 @@
 package liveWPCGui;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,11 +9,17 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-public class liveWPC_text_write {//テキストファイルを書き出すためのクラス
+public class liveWPC_text_write_read {//テキストファイルを書き出すためのクラス
 
 	private String writestr="";//書き出す内容を記録する変数
 	//private liveWPC_create_object co;
@@ -45,8 +52,9 @@ public class liveWPC_text_write {//テキストファイルを書き出すため
 			System.out.println(e);
 		}
 	}
-	public void setList(ArrayList<liveWPC_create_object> list){//動作確認用のメソッド、後で消去する予定
+	public void setList(ArrayList<liveWPC_create_object> list){//保存の下準備をするメソッド
 		int i=0;
+		writestr = "[\r\n";
 		for(liveWPC_create_object co : list){
 			i++;
 			if((imagepath = co.getImagePath())!=null){
@@ -55,8 +63,17 @@ public class liveWPC_text_write {//テキストファイルを書き出すため
 				//System.out.println("yattaze"+co.getName());
 			}
 			System.out.println(imagelist);
-			writestr = writestr+"\r\n"+i+co.returnValue()+"\r\n";
+			System.out.println(list.size());
+
+			if((i)==list.size()){
+				writestr = writestr+"\r\n"+co.returnValue()+"\r\n";
+			}else {
+				writestr = writestr+"\r\n"+co.returnValue()+",\r\n";
+			}
+
 		}
+		writestr = writestr+"\r\n]";
+
 		//System.out.println(writestr);
 	}
 
@@ -197,6 +214,85 @@ public class liveWPC_text_write {//テキストファイルを書き出すため
 			return false;
 		}
 		return true;
+	}
+	public File unzip( String zipFileFullPath, String unzipPath ) {
+
+			File baseFile = new File(zipFileFullPath);
+			File baseDir = new File(baseFile.getParent(), baseFile.getName().substring(0, baseFile.getName().lastIndexOf(".")));
+			if ( !baseDir.mkdir() ){
+				System.out.println("Couldn't create directory because directory with the same name exists.: " + baseDir);
+			}
+			ZipFile zipFile = null;
+			try {
+				// ZIPファイルオブジェクト作成
+				zipFile = new ZipFile(zipFileFullPath);
+
+				// ZIPファイル内のファイルを列挙
+				Enumeration<? extends ZipEntry>  enumZip = zipFile.entries();
+
+				// ZIPファイル内の全てのファイルを展開
+				while ( enumZip.hasMoreElements() ) {
+
+					// ZIP内のエントリを取得
+					ZipEntry zipEntry = (java.util.zip.ZipEntry)enumZip.nextElement();
+
+					//出力ファイル取得
+					File unzipFile = new File(unzipPath);
+					File outFile = new File(unzipFile.getAbsolutePath() + "/" + baseDir.getName(), zipEntry.getName());
+
+					if ( zipEntry.isDirectory() )
+						outFile.mkdir();
+					else {
+						// 圧縮ファイル入力ストリーム作成
+						BufferedInputStream in = new BufferedInputStream(zipFile.getInputStream(zipEntry));
+
+						// 親ディレクトリがない場合、ディレクトリ作成
+						if ( !outFile.getParentFile().exists() )
+							outFile.getParentFile().mkdirs();
+
+						// 出力オブジェクト取得
+						BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(outFile));
+
+						// 読み込みバッファ作成
+						byte[] buffer = new byte[1024];
+
+						// 解凍ファイル出力
+						int readSize = 0;
+						while ( (readSize = in.read(buffer)) != -1 ) {
+							out.write(buffer, 0, readSize);
+						}
+						// クローズ
+						try { out.close(); } catch (Exception e) {}
+						try { in.close(); } catch (Exception e) {}
+					}
+				}
+				// 解凍処理成功
+				return baseDir;
+			} catch(Exception e) {
+				// エラーログ出力
+				System.out.println(e.toString());
+				// 解凍処理失敗
+				return null;
+			} finally {
+				if ( zipFile != null )
+					try { zipFile.close();    } catch (Exception e) {}
+			}
+		}
+	public String readfile( String zipFileFullPath, String unzipPath ){
+
+		try{
+			File file = unzip(zipFileFullPath,unzipPath);
+			//System.out.println(file);
+			//System.out.println(Files.lines(Paths.get(file+"/text.txt"), Charset.forName("UTF-8"))
+			//.collect(Collectors.joining(System.getProperty("line.separator"))));
+			return Files.lines(Paths.get(file+"/"+file.getName()+"/text.txt"), Charset.forName("UTF-8"))
+			.collect(Collectors.joining(System.getProperty("line.separator")));
+		}catch(Exception e){
+			System.out.println(e);
+		}
+		return null;
+
+
 	}
 
 
