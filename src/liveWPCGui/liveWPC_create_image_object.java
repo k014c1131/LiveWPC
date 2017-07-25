@@ -1,45 +1,60 @@
 package liveWPCGui;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class liveWPC_create_image_object extends liveWPC_create_object{
 	private String imagepath;
-	private ImageIcon icon;
+	private BufferedImage image;
+	private Graphics2D g2d;
 	liveWPC_create_image_object(String imagepath){
 		super();
 		this.imagepath=imagepath;
-		icon = imageResize(imagepath);
+		this.setVisible(true);
+		this.repaint();
+		this.setSize(1000,1000);
+		/*
 		label.setBackground(null);
 		label.setIcon(icon);
 		label.setVisible(true);
 		// 座標指定
-
 		objectReSize();
-
-
-	}
-	public ImageIcon imageResize(String str){
-		icon = new ImageIcon(str);
-		Image img = icon.getImage() ;//画像を読み込み
-
-		Image newimg = img.getScaledInstance(//サイズを変更
-				icon.getIconWidth(),
-				icon.getIconHeight(),
-				java.awt.Image.SCALE_SMOOTH ) ;
-
-		icon = new ImageIcon( newimg );//サイズ変更した画像に変更する
-		return icon;
+		*/
 	}
 	@Override
-	public void objectReSize(){
-		if(width == -1 && height == -1){
-			width = icon.getIconWidth();
-			height = icon.getIconHeight();
+	public void paintComponent(Graphics g) {
+
+		super.paintComponent(g);
+		g2d = (Graphics2D) g;
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
+		try {
+			image = ImageIO.read(new File(imagepath));
+			if(width == -1 && height == -1){
+				width = image.getWidth();
+				height = image.getHeight();this.setSize(image.getWidth(),image.getHeight());
+			}
+			g2d.drawImage(image,0,0,width,height, null);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
+	@Override
+	public void objectReSize(){
 		this.setSize(width,height);
-		label.setBounds(0,0,width, height);
+		label.setSize(width, height);
+		System.out.println(this.getWidth());
+		label.setSize(width,height);
+		repaint();
 	}
 
 	@Override
@@ -64,6 +79,10 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	}
 	private String getImagePath(){
 		return imagepath;
+	}
+
+	public void refinealpha(){
+		this.repaint();
 	}
 
 
