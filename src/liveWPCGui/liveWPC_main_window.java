@@ -18,9 +18,9 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	private static ArrayList<liveWPC_create_object> list= new ArrayList<liveWPC_create_object>();
 
 	liveWPC_main_window(){
-		tool_window= new liveWPC_tool_window();
-		proprety_window = new liveWPC_proprety_window();
-		proprety_window.call_proprety_window(1);//数字を変更することで表示する内容を変える。
+		//tool_window= new liveWPC_tool_window();
+		//proprety_window = new liveWPC_proprety_window();
+		//proprety_window.call_proprety_window(1);//数字を変更することで表示する内容を変える。
 		//proprety_window.call_proprety_window(0);
 
 		panel.setPreferredSize(new Dimension(750,480));
@@ -41,8 +41,11 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 
 
+
 		setSize(750,480);
 		setLocationRelativeTo(null);
+		//proprety_window.change_text_size_box(false);
+		//proprety_window.change_font_type_box(false);
 
 	}
 
@@ -52,41 +55,52 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		super.paint(g);
 	}*/
 
-	public static void insert_image(String imagepath){
+	public  void insert_image(String imagepath){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath);
 		panel.add(tc);
 		tc.setLocation(50, 50);
 		list.add(tc);
 	}
-	public static void insert_image(String imagepath,int x,int y,int width,int height){
+	public  void insert_image(String imagepath,int x,int y,int width,int height){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height);
 		panel.add(tc);
 		tc.setLocation(x, y);
 		list.add(tc);
 	}
 
-	public static void insert_text(){
-	liveWPC_create_text_object tc = new liveWPC_create_text_object();
+	public  void insert_text(){
+	liveWPC_create_text_object tc = new liveWPC_create_text_object(proprety_window);
 	panel.add(tc);
 	tc.setLocation(50, 50);
 	list.add(tc);
 	//panel.removeAll();
 	//panel.repaint();
 	}
-	public static void insert_text(int x,int y,int width,int height,String text){
+	public  void insert_text(int x,int y,int width,int height,String text){
 		liveWPC_create_text_object tc = new liveWPC_create_text_object(width, height, text);
 		panel.add(tc);
 		tc.setLocation(x, y);
 		list.add(tc);
 		}
-	public static ArrayList<liveWPC_create_object> getList(){
+	public ArrayList<liveWPC_create_object> getList(){
 		return list;
 	}
-	public static void removeAllObject(){
+	public void removeAllObject(){
 		panel.removeAll();
 		panel.add(border);
 		panel.repaint();
 	}
+	public void removeObject(liveWPC_create_object obj){
+		//panel.removeAll();
+		panel.remove(obj);
+		panel.repaint();
+	}
+
+	public void setWindow(liveWPC_tool_window tool_window,liveWPC_proprety_window proprety_window){
+		this.tool_window=tool_window;
+		this.proprety_window=proprety_window;
+		this.addKeyListener(proprety_window);//ここで削除処理をプロパティから借りている
+		}
 }
 
 
