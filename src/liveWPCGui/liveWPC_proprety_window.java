@@ -6,6 +6,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
@@ -17,9 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import java.util.*;
-
-public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base,ActionListener{
+public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base,ActionListener,KeyListener{
 
 
 	//プライベート変数の宣言
@@ -50,7 +52,10 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private static JTextField object_point_y;
 	private static int object_type_number;
 
-	private static List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
+	private liveWPC_tool_window tool_window;
+	private liveWPC_main_window main_window;
+
+	public static List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
 
 	private final static int TEXTOBJECTNUMBER = 0;
 
@@ -65,6 +70,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		object_alpha_value = new JTextField("100");;
 		object_animation_time = new JTextField("100");
 		object_animation_speed = new JTextField("100");
+		call_proprety_window(1);
 		//エンター押下字の処理を追加 ↓例
 		//object_height.addAncestorListener(null);
 
@@ -98,7 +104,12 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		p3.add(create_textbox("幅：",object_width),BorderLayout.LINE_START);
 
 		object_height.addActionListener(this);
+		object_height.addKeyListener(this);
+
 		object_width.addActionListener(this);
+		object_width.addKeyListener(this);
+
+		this.addKeyListener(this);
 
 
 	 JPanel p4 = new JPanel();
@@ -108,7 +119,10 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		p3.add(p4,BorderLayout.SOUTH);
 
 		object_point_x.addActionListener(this);
+		object_point_x.addKeyListener(this);
+
 		object_point_y.addActionListener(this);
+		object_point_y.addKeyListener(this);
 
 
 	JPanel p5 = new JPanel();
@@ -260,7 +274,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			y = 480 - objs.get(0).height;
 		}
 		//確認用座標表示
-		System.out.println(x+ "" +y);
+		System.out.println(x+ " " +y);
 		objs.get(0).setLocation(x,y);
 		objs.get(0).x = x;
 		objs.get(0).y = y;
@@ -278,7 +292,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			//p.remove(textsize);
 			//p.remove(font);
 		}
-		get_object_size();
+		 get_object_size();
 	}
 
 	public static void get_object_size(){
@@ -323,6 +337,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("イベント発生"
 				+ e.getSource());
+
 		if(e.getSource() == object_point_x || e.getSource() == object_point_y){
 			refine_object_point();
 		}else if(e.getSource() == object_alpha_value){
@@ -331,6 +346,33 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			refine_object_size();
 		}
 
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_DELETE){//選択中のオブジェクトの削除処理(仮)
+			System.out.println(objs.size());
+			if(objs.size() != 0){
+				main_window.removeObject(objs.remove(0));
+			System.out.println("1N");
+			}
+		}
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	public void setWindow(liveWPC_tool_window tool_window,liveWPC_main_window main_window){
+		this.tool_window=tool_window;
+		this.main_window=main_window;
 	}
 }
 class IntegerInputVerifier extends InputVerifier {
@@ -347,6 +389,7 @@ class IntegerInputVerifier extends InputVerifier {
 	    return verified;
 	  }
 	}
+
 
 
 

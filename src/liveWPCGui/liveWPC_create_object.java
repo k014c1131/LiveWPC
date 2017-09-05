@@ -18,6 +18,14 @@ public abstract class liveWPC_create_object  extends JPanel{
 	protected int width = -1;
 	protected int height = -1;
 	protected float alpha;
+	protected Color color;
+	protected boolean action;	//アクショントリガーの有無を判別する
+	protected String animename;	//アニメーションの種類
+	protected int animetime;	//アニメーションの時間を設定
+	protected int animespeed;	//アニメーションの速度を設定
+
+	//アニメーションの種類と時間速度を設定
+
 	liveWPC_create_object(){
 		label = new JLabel();
 		this.setBackground(new Color(0,0,0,0));
@@ -76,7 +84,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
-			setLocation(x, y);
+			//setLocation(x, y);
 			objectReSize();
 			int btn = e.getButton();
 			if (btn == MouseEvent.BUTTON1){

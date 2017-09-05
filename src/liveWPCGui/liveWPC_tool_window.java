@@ -43,6 +43,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 	private ImageIcon loadicon;
 	private File file = null;
 	private liveWPC_text_write_read tw;
+
+	private liveWPC_main_window main_window;
+	private liveWPC_proprety_window proprety_window;
+
 	liveWPC_tool_window(){
 
 		toolbar.setBounds(10, 10, 100, 10);
@@ -150,7 +154,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		button.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
-						liveWPC_main_window.insert_image(str);
+						main_window.insert_image(str);
 					}
 				}
 				);									 //ここまで
@@ -163,7 +167,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		button.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
-						liveWPC_main_window.insert_text();
+						main_window.insert_text();
 					}
 				}
 				);									//ここまで
@@ -222,7 +226,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				int selected =	filechooser.showSaveDialog(this);
 				if(selected==JFileChooser.APPROVE_OPTION){
 
-					tw.setList(liveWPC_main_window.getList());
+					tw.setList(main_window.getList());
 					System.out.println(file.getPath());
 					//file.mkdir();//フォルダを作成するメソッド
 					System.out.println(file);
@@ -237,13 +241,13 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			if(selected==JFileChooser.APPROVE_OPTION){
 				file=				filechooser.getSelectedFile();//zipファイルのファイルパスを取得
 
-				//System.out.println(file.getParent()+" "+file.getName());
+				System.out.println(file.getParent()+" "+file.getName());
 				try{
 					//tw.unzip(file.getPath(),file.getParent());
 					//System.out.println(tw.readfile(file.getPath(), file.getParent()));
 					String json = tw.readfile(file.getPath(), file.getParent());
 					//System.out.println(json);
-					liveWPC_main_window.removeAllObject();
+					main_window.removeAllObject();
 
 					//String json = "{\"enableinfo\":true,\"x\":337,\"y\":60,\"imagepath\":\"img/chouhoukei.png\",\"icon\":null}";
 
@@ -257,11 +261,11 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 
 						switch (line.getType()){
 						case "Image":
-							liveWPC_main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight());
-							System.out.println("非常に不満");
+							main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight());
+							//System.out.println("非常に不満");
 							break;
 						case "TextArea":
-							liveWPC_main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString());
+							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString());
 							break;
 						/*case 3:
 							System.out.println("どちらとも言えない");
@@ -313,7 +317,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		FileChannel outChannel = new FileOutputStream(out).getChannel();
 		try {
 			inChannel.transferTo(0, inChannel.size(),outChannel);
-			liveWPC_main_window.insert_image(out.getPath());
+			main_window.insert_image(out.getPath());
 
 			if (inChannel != null){
 				inChannel.close();
@@ -327,6 +331,11 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		}
 		finally {
 		}
+	}
+	public void setWindow(liveWPC_main_window main_window,liveWPC_proprety_window proprety_window){
+		this.main_window=main_window;
+		this.proprety_window=proprety_window;
+		this.addKeyListener(proprety_window);
 	}
 
 }

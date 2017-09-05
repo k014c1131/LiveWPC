@@ -1,16 +1,13 @@
 package liveWPCGui;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class liveWPC_create_image_object extends liveWPC_create_object{
 	private String imagepath;
@@ -22,6 +19,7 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 		this.setVisible(true);
 		this.repaint();
 		this.setSize(1000,1000);
+
 		/*
 		label.setBackground(null);
 		label.setIcon(icon);
@@ -37,6 +35,7 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 		this.height = height;
 		this.setVisible(true);
 		this.repaint();
+		objectReSize();
 	}
 	@Override
 	public void paintComponent(Graphics g) {
@@ -49,6 +48,7 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 				width = image.getWidth();
 				height = image.getHeight();this.setSize(image.getWidth(),image.getHeight());
 			}
+			System.out.println("ペイント開始");
 			g2d.drawImage(image,0,0,width,height, null);
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -9,8 +9,9 @@ import javax.swing.border.LineBorder;
 public class liveWPC_create_text_object extends liveWPC_create_object{
 
 	private JTextArea textf= new JTextArea();
+	private liveWPC_proprety_window proprety_window;
 
-	public liveWPC_create_text_object(){
+	public liveWPC_create_text_object(liveWPC_proprety_window proprety_window){
 		super();
 
 		LineBorder border = new LineBorder(Color.black);
@@ -27,6 +28,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 				textf.getHeight());*/
 
 		textf.setVisible(true);
+		textf.addKeyListener(proprety_window);
 		this.add(
 				textf,
 				BorderLayout.CENTER);
@@ -71,6 +73,8 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 			repaint();
 			enableinfo = false;
 		}
+		liveWPC_proprety_window.get_select_object(this,0);
+		super.onClickObject(setEnable);
 	}
 
 	@Override
@@ -85,6 +89,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		this.setSize(
 				textf.getWidth(),
 				textf.getHeight());
+		this.repaint();
 	}
 	@Override
 	public String returnValue() {
@@ -101,13 +106,14 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		return str;
 	}
 	@Override
-	public void refinealpha() {
-		// TODO 自動生成されたメソッド・スタブ
-	}
-	@Override
 	public String getImagePath() {//プログラムの仕様上必要
 		// TODO 自動生成されたメソッド・スタブ
 		return null;
+	}
+	@Override
+	public void refinealpha() {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }
