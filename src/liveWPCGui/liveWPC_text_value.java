@@ -8,14 +8,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class liveWPC_text_value {
-	int x;
-	int y;
-	int width;
-	int height;
-	Color color;
-	String imagepath;
-	String type;
-	String textstring;
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	private Color color;
+	private String imagepath;
+	private String type;
+	private String textstring;
+	private boolean action;	//アクショントリガーの有無を判別する
+	private String animename;	//アニメーションの種類
+	private int animetime;	//アニメーションの時間を設定
+	private int animespeed;	//アニメーションの速度を設定
 
 	@JsonCreator
 	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("ImagePath") String imagepath,@JsonProperty("type") String type,@JsonProperty("String") String textstring){
@@ -49,6 +53,9 @@ public class liveWPC_text_value {
 	public void setHeight(int height){
 		this.height=height;
 	}
+	public void setColor(Color color){
+		this.color=color;
+	}
 	public void setImagepath(String imagepath){
 		this.imagepath=imagepath;
 	}
@@ -57,6 +64,18 @@ public class liveWPC_text_value {
 	}
 	public void setTextString(String textstring){
 		this.textstring=textstring;
+	}
+	public void setAction(boolean action){
+		this.action=action;
+	}
+	public void setAnimeName(String animename){
+		this.animename=animename;
+	}
+	public void setAnimeTime(int animetime){
+		this.animetime=animetime;
+	}
+	public void setAnimeSpeed(int animespeed){
+		this.animespeed=animespeed;
 	}
 
 
@@ -72,6 +91,9 @@ public class liveWPC_text_value {
 	public int getHeight(){
 		return height;
 	}
+	public Color getColor(){
+		return color;
+	}
 	public String getImagepath(){
 		return imagepath;
 	}
@@ -80,6 +102,18 @@ public class liveWPC_text_value {
 	}
 	public String getTextString(){
 		return textstring;
+	}
+	public Boolean getAction(){
+		return action;
+	}
+	public String getAnimeName(){
+		return animename;
+	}
+	public int getAnimeTime(){
+		return animetime;
+	}
+	public int getAnimeSpeed(){
+		return animespeed;
 	}
 	public String toString(){
 		return x+" "+y+" "+width+" "+height+" "+imagepath+" "+type+" "+height+" "+textstring;
