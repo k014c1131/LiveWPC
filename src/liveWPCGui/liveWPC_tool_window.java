@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -62,8 +63,8 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		geometryicon	=	imageResize("img/icon1.png");//アイコンの変数作成
 		texticon	=		imageResize("img/icon2.png");//アイコンの変数作成
 		imageicon	=		imageResize("img/imageicon.jpg");//アイコンの変数作成
-		saveicon	=		imageResize("img/icon4.png");//アイコンの変数作成
-		loadicon	=		imageResize("img/icon4.png");//アイコンの変数作成
+		saveicon	=		imageResize("img/saveicon.jpeg");//アイコンの変数作成
+		loadicon	=		imageResize("img/loadicon.jpeg");//アイコンの変数作成
 
 		geometrybutton	=	new JButton(geometryicon);
 			geometrybutton=	setButtonSize(geometrybutton);
@@ -139,8 +140,22 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			forward=setButtonSize(forward,"前へ");
 			forward.addActionListener(this);
 
+			JScrollPane scrollpane = new JScrollPane();//テスト中
+			scrollpane.setPreferredSize(new Dimension(150,100));
+			//scrollpane.setBackground(Color.WHITE);
+			scrollpane.setVisible(true);
+
+			JPanel jpanel = new JPanel();
+			jpanel.setBackground(Color.WHITE);
+			jpanel.setSize(50,10);
+			JLabel label = new JLabel("test");
+			jpanel.add(label);
+			scrollpane.getViewport().setView(jpanel);
+
+
 			layerpanel.add(forward);
 			layerpanel.add(recession);
+			layerpanel.add(scrollpane);
 
 
 			getContentPane().add(toolbar,BorderLayout.CENTER);
@@ -225,8 +240,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					}
 				}
 			}
-
-		if(e.getSource()==savebutton){						//ファイル保存のメソッド
+		/*
+		 * ファイル保存のメソッド
+		 */
+		if(e.getSource()==savebutton){
 			JFileChooser filechooser =new JFileChooser() {
 
 				@Override public void approveSelection() {	//上書き確認の処理
@@ -254,7 +271,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					super.approveSelection();
 				}
 			};
-			FileNameExtensionFilter ff = new FileNameExtensionFilter(".txt(テキストファイル)", "txt");
+			FileNameExtensionFilter ff = new FileNameExtensionFilter(".zip(圧縮フォルダ)", "zip");
 			filechooser.setFileFilter(ff);
 				int selected =	filechooser.showSaveDialog(this);
 				if(selected==JFileChooser.APPROVE_OPTION){
@@ -275,7 +292,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				System.out.println(file.getParent()+" "+file.getName());
 				try{
 					String json = tw.readfile(file.getPath(), file.getParent());
-					//System.out.println(json);
+					System.out.println(json);
 					main_window.removeAllObject();
 
 					//String json = "{\"enableinfo\":true,\"x\":337,\"y\":60,\"imagepath\":\"img/chouhoukei.png\",\"icon\":null}";
@@ -286,18 +303,19 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					List<liveWPC_text_value> list = mapper.readValue(json, new TypeReference<List<liveWPC_text_value>>() {});
 
 					for(liveWPC_text_value line : list){
-						System.out.println(line.getX()+" "+line.getY()+" "+line.getWidth()+" "+line.getHeight()+" "+line.getTextString()+line.getImagepath());
+						//System.out.println(line.getX()+" "+line.getY()+" "+line.getWidth()+" "+line.getHeight()+" "+line.getTextString()+line.getImagepath());
 
 						switch (line.getType()){
 						case "Image":
-							main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight());
+							main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getLayer());
 							break;
 						case "TextArea":
-							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString());
+							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString(),line.getLayer());
 							break;
 						}
 
 					}
+					main_window.Sort();
 
 
 					System.out.println(list.get(0));
@@ -309,16 +327,20 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			}
 		}
 		tw = null;//中身を初期化(これがないと同じファイルに書き込んだ時に、上書きではなく追記になる)
-		if(e.getSource()==forward){
+
+
+		if(e.getSource()==forward){//選択中のオブジェクトのレイヤーをひとつ前に動かす
 			if(main_window.getPanel().getPosition(obj)-1>0){
 				main_window.getPanel().setPosition(obj,main_window.getPanel().getPosition(obj)-1);
+				obj.setLayer(main_window.getPanel().getPosition(obj));
 				layer.setText(""+main_window.getPanel().getPosition(obj));
 			}
 			//main_window.getPanel().setPosition(obj,main_window.getPanel().getPosition(obj)-1);
 			//layer.setText(""+main_window.getPanel().getPosition(obj));
 		}
-		if(e.getSource()==recession){
+		if(e.getSource()==recession){//選択中のオブジェクトのレイヤーをひとつ後ろに動かす
 			main_window.getPanel().setPosition(obj,main_window.getPanel().getPosition(obj)+1);
+			obj.setLayer(main_window.getPanel().getPosition(obj));
 			layer.setText(""+main_window.getPanel().getPosition(obj));
 		}
 	}

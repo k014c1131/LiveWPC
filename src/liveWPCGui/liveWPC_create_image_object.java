@@ -1,6 +1,7 @@
 package liveWPCGui;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -78,18 +79,29 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 				"\"y\":"+this.getY()+",\r\n"+
 				"\"width\":"+this.getWidth()+",\r\n"+
 				"\"height\":"+this.getHeight()+",\r\n"+
-				"\"ImagePath\":\""+this.getImagePath()+"\"\r\n"+
+				"\"ImagePath\":\""+this.getImagePath()+"\",\r\n"+
+				"\"layer\":"+this.getLayer()+"\r\n"+
 				"}";
 
 		return str;
 	}
 	public String getImagePath(){
-		return imagepath;
+
+		return imagepath.replace("\\", "/");
 	}
 
 	public void refinealpha(){
 		this.repaint();
 	}
+	@Override
+	public String getObjectType() {
+		return "image";
+	}
+	@Override
+	public void setColor(Color color) {
+		this.color=color;
+	}
+
 
 
 }

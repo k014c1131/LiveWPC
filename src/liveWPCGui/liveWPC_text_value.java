@@ -16,13 +16,14 @@ public class liveWPC_text_value {
 	private String imagepath;
 	private String type;
 	private String textstring;
+	private int layer; //レイヤーの位置を保持する
 	private boolean action;	//アクショントリガーの有無を判別する
 	private String animename;	//アニメーションの種類
 	private int animetime;	//アニメーションの時間を設定
 	private int animespeed;	//アニメーションの速度を設定
 
 	@JsonCreator
-	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("ImagePath") String imagepath,@JsonProperty("type") String type,@JsonProperty("String") String textstring){
+	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("ImagePath") String imagepath,@JsonProperty("type") String type,@JsonProperty("String") String textstring,@JsonProperty("layer") int layer){
 		setX(x);
 		setY(y);
 		setWidth(width);
@@ -30,6 +31,7 @@ public class liveWPC_text_value {
 		setImagepath(imagepath);
 		setType(type);
 		setTextString(textstring);
+		setLayer(layer);
 	}
 	/*@JsonCreator
 	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("String") String textstring,@JsonProperty("type") String type){
@@ -77,6 +79,9 @@ public class liveWPC_text_value {
 	public void setAnimeSpeed(int animespeed){
 		this.animespeed=animespeed;
 	}
+	public void setLayer(int layer){
+		this.layer=layer;
+	}
 
 
 	public int getX(){
@@ -115,6 +120,10 @@ public class liveWPC_text_value {
 	public int getAnimeSpeed(){
 		return animespeed;
 	}
+	public int getLayer(){
+		return layer;
+	}
+
 	public String toString(){
 		return x+" "+y+" "+width+" "+height+" "+imagepath+" "+type+" "+height+" "+textstring;
 	}

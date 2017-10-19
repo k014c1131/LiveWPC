@@ -15,7 +15,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	private liveWPC_tool_window tool_window;
 	private liveWPC_proprety_window proprety_window;
 	private JLayeredPane pane = new JLayeredPane();
-	private static ArrayList<liveWPC_create_object> list= new ArrayList<liveWPC_create_object>();
+	private ArrayList<liveWPC_create_object> list= new ArrayList<liveWPC_create_object>();
 
 	liveWPC_main_window(){
 
@@ -51,7 +51,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	public  void insert_image(String imagepath){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath);
-		setPanel(tc);
+		setPanel(tc,0);
 		/*panel.add(tc);
 		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
@@ -59,9 +59,9 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		System.out.println(pane.getSize());
 		list.add(tc);*/
 	}
-	public  void insert_image(String imagepath,int x,int y,int width,int height){
+	public  void insert_image(String imagepath,int x,int y,int width,int height,int layer){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height);
-		setPanel(tc,x,y);
+		setPanel(tc,x,y,layer);
 		/*panel.add(tc);
 		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
@@ -71,16 +71,16 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	public  void insert_text(){
 	liveWPC_create_text_object tc = new liveWPC_create_text_object(proprety_window);
-	setPanel(tc);
+	setPanel(tc,0);
 	/*panel.add(tc);
 	panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
 	panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
 	tc.setLocation(50, 50);
 	list.add(tc);*/
 	}
-	public  void insert_text(int x,int y,int width,int height,String text){
+	public  void insert_text(int x,int y,int width,int height,String text,int layer){
 		liveWPC_create_text_object tc = new liveWPC_create_text_object(width, height, text);
-		setPanel(tc,x,y);
+		setPanel(tc,x,y,layer);
 		/*panel.add(tc);
 		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
@@ -88,6 +88,10 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		list.add(tc);*/
 		}
 	public ArrayList<liveWPC_create_object> getList(){
+		for(int i = 0;i<getPanel().getComponentCount()-1;i++){//レイヤーの値を設定する
+			//System.out.println("ポジション："+getPanel().getPosition(list.get(i)));
+			list.get(i).setLayer(getPanel().getPosition(list.get(i)));
+		}
 		return list;
 	}
 	public void removeAllObject(){
@@ -98,6 +102,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	public void removeObject(liveWPC_create_object obj){
 		panel.remove(obj);
 		panel.repaint();
+		this.requestFocus();//テキストボックスを消去した後のバグ回避用
 	}
 
 	public void setWindow(liveWPC_tool_window tool_window,liveWPC_proprety_window proprety_window){
@@ -108,19 +113,28 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	public JLayeredPane getPanel(){
 		return panel;
 	}
-	public void setPanel(liveWPC_create_object tc){
+	public void setPanel(liveWPC_create_object tc,int layer){
 		panel.add(tc);
-		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
+		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, layer);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
 		tc.setLocation(50, 50);
+		tc.setLayer(layer);
 		list.add(tc);
 	}
-	public void setPanel(liveWPC_create_object tc,int x,int y){
+	public void setPanel(liveWPC_create_object tc,int x,int y,int layer){
 		panel.add(tc);
-		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
+		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, layer);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
 		tc.setLocation(x, y);
+		tc.setLayer(layer);
 		list.add(tc);
+	}
+	//レイヤーの値を設定する
+	public void Sort(){
+		for(int i = 0;i<list.size();i++){
+			System.out.println("ポジション："+list.get(i).getLayer());
+			getPanel().setPosition(list.get(i),list.get(i).getLayer());
+		}
 	}
 }
 

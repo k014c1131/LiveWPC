@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -85,6 +86,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		colorchange = new JButton();
 		colorchange.setBackground(Color.RED);
 		colorchange.setPreferredSize(new Dimension(20, 20));
+		colorchange.addActionListener(this);
 
 
 
@@ -344,6 +346,25 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			refine_object_alpha();
 		}else if(e.getSource() == object_height || e.getSource() == object_width){
 			refine_object_size();
+		}else if(e.getSource() == colorchange){
+			JColorChooser colorchooser = new JColorChooser();
+
+			Color color = colorchooser.showDialog(this, "色の選択", Color.white);
+
+			if(color != null){
+				colorchange.setBackground(color);
+				//p.setBackground(color);
+
+				if(objs.size()>0){
+					switch(objs.get(0).getObjectType()){
+					case "text":
+						objs.get(0).setColor(color);;
+						break;
+					case "image":
+						break;
+					}
+				}
+			}
 		}
 
 	}
