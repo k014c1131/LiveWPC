@@ -270,7 +270,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			y = 480 - objs.get(0).height;
 		}
 		//確認用座標表示
-		System.out.println(x+ " " +y);
+
 		objs.get(0).setLocation(x,y);
 		objs.get(0).x = x;
 		objs.get(0).y = y;
@@ -298,7 +298,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	}
 
 	public static void get_object_size(){
-		System.out.println(object_height.getText());
 		object_height.setText(objs.get(0).height + "");
 		object_width.setText(objs.get(0).width + "");
 	}
@@ -307,7 +306,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 
  */
 	public static void get_object_point(){
-		System.out.println(object_height.getText());
 		object_point_x.setText(objs.get(0).x + "");
 		object_point_y.setText(objs.get(0).y + "");
 	}
@@ -318,7 +316,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		float alpha_value = 1;
 		try{
 			alpha_value = Float.parseFloat(object_alpha_value.getText());
-			System.out.println(alpha_value);
 			if(alpha_value < 0){
 				alpha_value = 0;
 				object_alpha_value.setText("0");
@@ -354,11 +351,14 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			if(color != null){
 				colorchange.setBackground(color);
 				//p.setBackground(color);
-
 				if(objs.size()>0){
 					switch(objs.get(0).getObjectType()){
 					case "text":
 						objs.get(0).setColor(color);;
+						break;
+					case "figure":
+						System.out.println("通過チェック");
+						objs.get(0).setColor(color);
 						break;
 					case "image":
 						break;
@@ -381,7 +381,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_DELETE){//選択中のオブジェクトの削除処理(仮)
-			System.out.println(objs.size());
 			if(objs.size() != 0){
 				main_window.removeObject(objs.remove(0));
 			System.out.println("1N");

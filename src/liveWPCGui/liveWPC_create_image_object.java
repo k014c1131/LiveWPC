@@ -49,7 +49,6 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 				width = image.getWidth();
 				height = image.getHeight();this.setSize(image.getWidth(),image.getHeight());
 			}
-			System.out.println("ペイント開始");
 			g2d.drawImage(image,0,0,width,height, null);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -60,7 +59,6 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	public void objectReSize(){
 		this.setSize(width,height);
 		label.setSize(width, height);
-		System.out.println(this.getWidth());
 		label.setSize(width,height);
 		repaint();
 	}
