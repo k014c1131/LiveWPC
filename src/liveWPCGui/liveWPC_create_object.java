@@ -23,6 +23,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 	protected String animename;	//アニメーションの種類
 	protected int animetime;	//アニメーションの時間を設定
 	protected int animespeed;	//アニメーションの速度を設定
+	protected int layer;
 
 	//アニメーションの種類と時間速度を設定
 
@@ -48,6 +49,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 	public abstract String returnValue();
 	public abstract void refinealpha();
 	public abstract String getImagePath();
+	public abstract String getObjectType();
+	public abstract void setColor(Color color);
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
@@ -96,6 +99,12 @@ public abstract class liveWPC_create_object  extends JPanel{
 			}
 		}
 
+	}
+	public int getLayer(){//仮置き
+		return layer;
+	}
+	public void setLayer(int layer){//仮置き
+		this.layer=layer;
 	}
 	/*@Override
 	public void paint(Graphics g){//現在使用してない

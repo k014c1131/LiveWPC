@@ -21,6 +21,8 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		MyMouseListener listener = new MyMouseListener();
 		textf.addMouseListener(listener);
 		textf.addMouseMotionListener(listener);
+		width=200;
+		height=40;
 		objectReSize();
 
 		/*this.setSize(
@@ -79,7 +81,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 
 	@Override
 	public void objectReSize(){
-		textf.setSize(200, 35);
+		textf.setSize(width,height);
 		this.setSize(
 				textf.getWidth(),
 				textf.getHeight());
@@ -100,7 +102,8 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 				"\"y\":"+this.getY()+",\r\n"+
 				"\"width\":"+this.getWidth()+",\r\n"+
 				"\"height\":"+this.getHeight()+",\r\n"+
-				"\"String\":\""+textf.getText()+"\"\r\n"+
+				"\"String\":\""+textf.getText()+"\",\r\n"+
+				"\"layer\":"+this.getLayer()+"\r\n"+
 				"}";
 
 		return str;
@@ -113,6 +116,15 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 	@Override
 	public void refinealpha() {
 		// TODO 自動生成されたメソッド・スタブ
+
+	}
+	@Override
+	public String getObjectType() {
+		return "text";
+	}
+	@Override
+	public void setColor(Color color) {
+		this.textf.setForeground(color);
 
 	}
 

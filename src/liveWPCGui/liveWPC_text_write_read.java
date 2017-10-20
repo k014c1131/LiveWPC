@@ -60,7 +60,6 @@ public class liveWPC_text_write_read {//テキストファイルを書き出す�
 			if((imagepath = co.getImagePath())!=null){
 				imagelist.add(imagepath);//ファイルパスをもとに画像をコピー
 
-				//System.out.println("yattaze"+co.getName());
 			}
 			System.out.println(imagelist);
 			System.out.println(list.size());
@@ -74,7 +73,6 @@ public class liveWPC_text_write_read {//テキストファイルを書き出す�
 		}
 		writestr = writestr+"\r\n]";
 
-		//System.out.println(writestr);
 	}
 
 	public void copyFile(File in, File out) throws IOException {
@@ -107,6 +105,7 @@ public class liveWPC_text_write_read {//テキストファイルを書き出す�
 			archive(outZip, baseFile, file);
 		} catch ( Exception e ) {
 			// ZIP圧縮失敗
+			System.out.println(e);
 			return false;
 		} finally {
 			// ZIPエントリクローズ
@@ -189,7 +188,6 @@ public class liveWPC_text_write_read {//テキストファイルを書き出す�
 		outZip.setLevel(5);
 
 		// 文字コードを指定
-		//outZip.setEncoding(enc);
 		try {
 
 			// ZIPエントリ作成

@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -27,11 +28,11 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	//プライベート変数の宣言
 	private String[] textsizedata = {"18", "24", "30", "36"};
 	private String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
-	private String[] triggerdata = {"タップ", "スライド", "表示"};
-	private String[] animemotiondata = {"回転","スクロール","遠近","出現","消失"};
-	private static JComboBox textsize;
-	private static JComboBox font;
-	private static JPanel p;
+	private String[] triggerdata = {"タップ", "スライド", "表示","常時"};
+	private String[] animemotiondata = {"なし","回転","スクロール","遠近","出現","消失"};
+	private  JComboBox textsize;
+	private  JComboBox font;
+	private  JPanel p;
 	private JButton colorchange;
 	private JLabel triggerlabel;
 	private JComboBox trigger;
@@ -52,7 +53,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private static JTextField object_point_y;
 	private static int object_type_number;
 
-	private liveWPC_tool_window tool_window;
+	private static liveWPC_tool_window tool_window;
 	private liveWPC_main_window main_window;
 
 	public static List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
@@ -85,6 +86,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		colorchange = new JButton();
 		colorchange.setBackground(Color.RED);
 		colorchange.setPreferredSize(new Dimension(20, 20));
+		colorchange.addActionListener(this);
 
 
 
@@ -164,8 +166,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			animetimetextbox = new JTextField("100");
 			animetimetextbox.setHorizontalAlignment(JTextField.CENTER);
 			animetimetextbox.setPreferredSize(new Dimension(40, 30));
-			//p7.add(animetimelabel,BorderLayout.LINE_START);
-			//p7.add(animetimetextbox,BorderLayout.LINE_START);
 			p8.add(create_textbox("継続時間：",object_animation_time),BorderLayout.LINE_START);
 		JPanel p9 = new JPanel();
 
@@ -183,10 +183,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	getContentPane().add(p7);
 	getContentPane().add(p8);
 	getContentPane().add(p9);
-	//getContentPane().add(p2, BorderLayout.CENTER);
-	//getContentPane().add(font, BorderLayout.NORTH);
-	//getContentPane().add(textsize, BorderLayout.NORTH);
-	//getContentPane().add(colorchange,BorderLayout.LINE_START);
 
 	setBounds(50,100,220,450);
 	setResizable(false);
@@ -283,10 +279,16 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	//該当のオブジェクトをプロパティウィンドウで保持するメソッド
 	//いずれ保持廃棄処理を分割する
 	public static void get_select_object(liveWPC_create_object obj,int object_type){
+
 		if(objs.size() != 0){
+			if(!objs.get(0).equals(obj)){
+				objs.get(0).onClickObject(true);
+			}
 			objs.clear();
 		}
+
 		objs.add(obj);
+		tool_window.setLayer(obj);
 		object_type_number = object_type;
 		if (object_type == TEXTOBJECTNUMBER){
 			//p.remove(textsize);
@@ -344,6 +346,25 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			refine_object_alpha();
 		}else if(e.getSource() == object_height || e.getSource() == object_width){
 			refine_object_size();
+		}else if(e.getSource() == colorchange){
+			JColorChooser colorchooser = new JColorChooser();
+
+			Color color = colorchooser.showDialog(this, "色の選択", Color.white);
+
+			if(color != null){
+				colorchange.setBackground(color);
+				//p.setBackground(color);
+
+				if(objs.size()>0){
+					switch(objs.get(0).getObjectType()){
+					case "text":
+						objs.get(0).setColor(color);;
+						break;
+					case "image":
+						break;
+					}
+				}
+			}
 		}
 
 	}
