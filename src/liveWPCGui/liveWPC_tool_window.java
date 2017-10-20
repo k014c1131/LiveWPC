@@ -202,7 +202,8 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		button.addActionListener(//ボタンごとに処理作成ここから
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
-						main_window.insert_image(str);
+						//main_window.insert_image(str);
+						main_window.insert_figure("Circle");
 					}
 				}
 				);									 //ここまで

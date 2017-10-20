@@ -41,6 +41,13 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 		setSize(750,480);
 		setLocationRelativeTo(null);
+		//proprety_window.change_text_size_box(false);
+		//proprety_window.change_font_type_box(false);
+
+		liveWPC_create_object tc = new liveWPC_create_figure_object("Circle");
+		panel.add(tc);
+		tc.setLocation(50,50);
+		list.add(tc);
 	}
 
 	/*@Override
@@ -52,12 +59,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	public  void insert_image(String imagepath){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath);
 		setPanel(tc,0);
-		/*panel.add(tc);
-		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, 0);
-		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
-		tc.setLocation(50, 50);
-		System.out.println(pane.getSize());
-		list.add(tc);*/
 	}
 	public  void insert_image(String imagepath,int x,int y,int width,int height,int layer){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height);
@@ -89,11 +90,20 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		}
 	public ArrayList<liveWPC_create_object> getList(){
 		for(int i = 0;i<getPanel().getComponentCount()-1;i++){//レイヤーの値を設定する
-			//System.out.println("ポジション："+getPanel().getPosition(list.get(i)));
 			list.get(i).setLayer(getPanel().getPosition(list.get(i)));
 		}
 		return list;
 	}
+
+	public void insert_figure(String figuretype){
+		System.out.println(figuretype);
+		liveWPC_create_object tc = new liveWPC_create_figure_object(figuretype);
+		panel.add(tc);
+		tc.setLocation(50,50);
+		list.add(tc);
+
+	}
+
 	public void removeAllObject(){
 		panel.removeAll();
 		panel.add(border);
@@ -132,7 +142,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 	//レイヤーの値を設定する
 	public void Sort(){
 		for(int i = 0;i<list.size();i++){
-			System.out.println("ポジション："+list.get(i).getLayer());
 			getPanel().setPosition(list.get(i),list.get(i).getLayer());
 		}
 	}
