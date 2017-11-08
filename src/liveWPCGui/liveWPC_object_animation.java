@@ -3,7 +3,7 @@ package liveWPCGui;
 //アニメーションを制御するためのクラス
 //create_obnjectで継承してすべてのオブジェクトにアニメーションを実装する形にする
 
-public class liveWPC_object_animation(){
+public class liveWPC_object_animation() extends liveWPC_create_object{
 	private int a_width,a_height,a_alpha,a_x,a_y;
 	private double rotate,fade_speed,scroll_speed,scale_speed,rotate_speed;
 	public liveWPC_object_animation(){

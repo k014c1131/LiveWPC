@@ -6,7 +6,7 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
-public class liveWPC_create_text_object extends liveWPC_create_object{
+public class liveWPC_create_text_object extends liveWPC_object_animation{
 
 	private JTextArea textf= new JTextArea();
 	private liveWPC_proprety_window proprety_window;

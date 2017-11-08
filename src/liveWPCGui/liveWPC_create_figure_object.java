@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class liveWPC_create_figure_object extends liveWPC_create_object{
+public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	private final String Rectangle = "Rectangle";
 	private final String Circle = "Circle";
 	private String Selectfigure;
