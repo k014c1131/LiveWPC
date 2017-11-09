@@ -372,7 +372,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		float alpha_value = 1;
 		try{
 			alpha_value = Float.parseFloat(object_alpha_value.getText());
-			System.out.println(alpha_value);
+			//System.out.println(alpha_value);
 			if(alpha_value < 0){
 				alpha_value = 0;
 				object_alpha_value.setText("0");
@@ -480,7 +480,6 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 					break;
 				}
 			}
-			System.out.println(data+" "+data2);
 
 		}
 	}
