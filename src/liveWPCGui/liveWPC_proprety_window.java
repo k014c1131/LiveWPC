@@ -4,13 +4,17 @@ package liveWPCGui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,17 +26,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base,ActionListener,KeyListener{
+public class liveWPC_proprety_window extends liveWPC_window_base implements liveWPC_property_base,ActionListener,KeyListener,ItemListener{
 
 
 	//プライベート変数の宣言
-	private String[] textsizedata = {"18", "24", "30", "36"};
+	private String[] textsize = {"12","18", "24", "30", "36"};
 	private String[] fontdata = {"ゴシック", "明朝", "メイリオ"};
 	private String[] triggerdata = {"タップ", "スライド", "表示","常時"};
 	private String[] animemotiondata = {"なし","回転","スクロール","遠近","出現","消失"};
-	private  JComboBox textsize;
-	private  JComboBox font;
-	private  JPanel p;
+	private JComboBox text;
+	private JComboBox font;
+	private DefaultComboBoxModel textsizedata;
+	private DefaultComboBoxModel fonttypedata;
+	private JPanel p;
 	private JButton colorchange;
 	private JLabel triggerlabel;
 	private JComboBox trigger;
@@ -44,19 +50,19 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private JTextField animetimetextbox;
 	private JLabel animemotionlabel;
 	private JComboBox animemotion;
-	private static JTextField object_width;
-	private static JTextField object_height;
+	private JTextField object_width;
+	private JTextField object_height;
 	private JTextField object_alpha_value;
 	private JTextField object_animation_time;
 	private JTextField object_animation_speed;
-	private static JTextField object_point_x;
-	private static JTextField object_point_y;
-	private static int object_type_number;
+	private JTextField object_point_x;
+	private JTextField object_point_y;
+	private int object_type_number;
 
-	private static liveWPC_tool_window tool_window;
+	private liveWPC_tool_window tool_window;
 	private liveWPC_main_window main_window;
 
-	public static List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
+	public List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
 
 	private final static int TEXTOBJECTNUMBER = 0;
 
@@ -81,7 +87,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		p = new JPanel();
 		p.setPreferredSize(new Dimension(200, 80));
 		p.add(font,BorderLayout.WEST);
-		p.add(textsize,BorderLayout.CENTER);
+		p.add(text,BorderLayout.CENTER);
 
 		colorchange = new JButton();
 		colorchange.setBackground(Color.RED);
@@ -214,10 +220,14 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		box.setEditable(true);
 		return box;
 	}
-
+	public  JComboBox create_combo_box(DefaultComboBoxModel model){//文字列からコンボボックスを作るメソッド
+		JComboBox box = new JComboBox(model);
+		box.setEditable(true);
+		return box;
+	}
 
 	public void change_text_size_box(Boolean Enabled){//テキストサイズのボックスの有効無効を設定するメソッド
-		textsize.setEnabled(Enabled);
+		text.setEnabled(Enabled);
 	}
 
 
@@ -238,10 +248,14 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	}
 	//テキストフィールドオブジェクト用プロパティウィンドウ生成部分
 	public void create_text_proprety_field(){
-		textsize = create_combo_box(textsizedata);
-		textsize.setPreferredSize(new Dimension(50, 30));
+		textsizedata = new  DefaultComboBoxModel(textsize);
+		text = create_combo_box(textsizedata);
+		text.addItemListener(this);
+		text.setPreferredSize(new Dimension(50, 30));
 
-		font = create_combo_box(fontdata);
+		fonttypedata = new  DefaultComboBoxModel(fontdata);
+		font = create_combo_box(fonttypedata);
+		font.addItemListener(this);
 		font.setPreferredSize(new Dimension(100, 30));
 	}
 
@@ -270,21 +284,61 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			y = 480 - objs.get(0).height;
 		}
 		//確認用座標表示
-
+		//System.out.println(x+ " " +y);
 		objs.get(0).setLocation(x,y);
 		objs.get(0).x = x;
 		objs.get(0).y = y;
 	}
+	public void refine_object_point(int changeValue,String xORy){//キー操作で座標変更するメソッド、strでxとyの変更する座標を判断
+		int x = new Integer(object_point_x.getText());
+		int y = new Integer(object_point_y.getText());
+
+		switch (xORy){
+		case "x":
+			x = x + changeValue;
+			break;
+		case "y":
+			y = y + changeValue;
+			break;
+		}
+
+		//ラベルのサイズ上限値
+		if(x > 750){
+			x = 750 - objs.get(0).width;
+		}
+		if(y > 480){
+			y = 480 - objs.get(0).height;
+		}
+		//確認用座標表示
+		//System.out.println(x+ " " +y);
+		objs.get(0).setLocation(x,y);
+		objs.get(0).x = x;
+		objs.get(0).y = y;
+
+		object_point_x.setText(x + "");
+		object_point_y.setText(y + "");
+	}
 	//オブジェクトから呼び出し
 	//該当のオブジェクトをプロパティウィンドウで保持するメソッド
 	//いずれ保持廃棄処理を分割する
-	public static void get_select_object(liveWPC_create_object obj,int object_type){
+	public void get_select_object(liveWPC_create_object obj,int object_type){
 
 		if(objs.size() != 0){
 			if(!objs.get(0).equals(obj)){
 				objs.get(0).onClickObject(true);
 			}
 			objs.clear();
+		}
+		switch (obj.getObjectType()){
+		case "figure":
+		case "image":
+			change_text_size_box(false);
+			change_font_type_box(false);
+			break;
+		case "text":
+			change_text_size_box(true);
+			change_font_type_box(true);
+			break;
 		}
 
 		objs.add(obj);
@@ -297,7 +351,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		 get_object_size();
 	}
 
-	public static void get_object_size(){
+	public void get_object_size(){
+		//System.out.println(object_height.getText());
 		object_height.setText(objs.get(0).height + "");
 		object_width.setText(objs.get(0).width + "");
 	}
@@ -305,7 +360,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
  * 選択オブジェクトの座標取得メソッド
 
  */
-	public static void get_object_point(){
+	public void get_object_point(){
+		//System.out.println(object_height.getText());
 		object_point_x.setText(objs.get(0).x + "");
 		object_point_y.setText(objs.get(0).y + "");
 	}
@@ -316,6 +372,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		float alpha_value = 1;
 		try{
 			alpha_value = Float.parseFloat(object_alpha_value.getText());
+			//System.out.println(alpha_value);
 			if(alpha_value < 0){
 				alpha_value = 0;
 				object_alpha_value.setText("0");
@@ -351,6 +408,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			if(color != null){
 				colorchange.setBackground(color);
 				//p.setBackground(color);
+
 				if(objs.size()>0){
 					switch(objs.get(0).getObjectType()){
 					case "text":
@@ -370,12 +428,10 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
 
 	}
 	@Override
@@ -383,16 +439,49 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		if(e.getKeyCode() == KeyEvent.VK_DELETE){//選択中のオブジェクトの削除処理(仮)
 			if(objs.size() != 0){
 				main_window.removeObject(objs.remove(0));
-			System.out.println("1N");
 			}
 		}
-		// TODO 自動生成されたメソッド・スタブ
+		if(e.getKeyCode()==KeyEvent.VK_UP){
+			refine_object_point(-1,"y");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN){
+			refine_object_point(1,"y");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_LEFT){
+			refine_object_point(-1,"x");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+			refine_object_point(1,"x");
+		}
+
 
 	}
 
 	public void setWindow(liveWPC_tool_window tool_window,liveWPC_main_window main_window){
 		this.tool_window=tool_window;
 		this.main_window=main_window;
+	}
+	 public void itemStateChanged(ItemEvent e) {
+		//int i = fonttypedata.getIndexOf(fonttypedata.getSelectedItem());
+		if (e.getStateChange() == ItemEvent.SELECTED){
+
+			String data = (String) fonttypedata.getSelectedItem();
+			String data2 = (String) textsizedata.getSelectedItem();
+			if(0<Integer.parseInt(data2)){
+				switch (data){
+				case "ゴシック":
+					objs.get(0).setFontType(new Font("ゴシック", 3,Integer.parseInt(data2)));
+					break;
+				case "明朝":
+					objs.get(0).setFontType(new Font("明朝", 3,Integer.parseInt(data2)));
+					break;
+				case "メイリオ":
+					objs.get(0).setFontType(new Font("メイリオ", 3,Integer.parseInt(data2)));
+					break;
+				}
+			}
+
+		}
 	}
 }
 class IntegerInputVerifier extends InputVerifier {
@@ -409,7 +498,4 @@ class IntegerInputVerifier extends InputVerifier {
 	    return verified;
 	  }
 	}
-
-
-
 
