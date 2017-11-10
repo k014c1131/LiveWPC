@@ -2,6 +2,7 @@ package liveWPCGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,6 +25,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 	protected int animetime;	//アニメーションの時間を設定
 	protected int animespeed;	//アニメーションの速度を設定
 	protected int layer;
+	private liveWPC_proprety_window proprety_window;
 
 	//アニメーションの種類と時間速度を設定
 
@@ -54,14 +56,15 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
+		System.out.println(returnValue());
 		if(setEnable ==false){
 			//ボーダーを青くする処理
 			LineBorder border = new LineBorder(Color.blue);
 			this.setBorder(border);
 			repaint();
 			enableinfo = true;
-			liveWPC_proprety_window.get_object_size();
-			liveWPC_proprety_window.get_object_point();
+			proprety_window.get_object_size();
+			proprety_window.get_object_point();
 		}else{
 			//ボーダーを透明化する処理
 			this.setBorder(null);
@@ -80,8 +83,8 @@ public abstract class liveWPC_create_object  extends JPanel{
 			x = e.getXOnScreen() - dx;
 			y = e.getYOnScreen() - dy;
 			setLocation(x, y);
-			liveWPC_proprety_window.get_object_size();
-			liveWPC_proprety_window.get_object_point();
+			proprety_window.get_object_size();
+			proprety_window.get_object_point();
 		}
 
 		public void mousePressed(MouseEvent e) {
@@ -105,6 +108,18 @@ public abstract class liveWPC_create_object  extends JPanel{
 	public void setLayer(int layer){//仮置き
 		this.layer=layer;
 	}
+
+	protected void setWindow(liveWPC_proprety_window proprety_window){
+		this.proprety_window=proprety_window;
+	}
+
+	protected liveWPC_proprety_window getWindow(){
+		return	proprety_window;
+	}
+	protected void setFontType(Font f){
+
+	}
+
 	/*@Override
 	public void paint(Graphics g){//現在使用してない
 		setLocation(x, y);

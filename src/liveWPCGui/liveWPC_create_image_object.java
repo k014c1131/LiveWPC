@@ -14,8 +14,10 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	private String imagepath;
 	private BufferedImage image;
 	private Graphics2D g2d;
-	liveWPC_create_image_object(String imagepath){//初期生成用
+	liveWPC_create_image_object(String imagepath,liveWPC_proprety_window proprety_window){//初期生成用
 		super();
+
+		setWindow(proprety_window);
 		this.imagepath=imagepath;
 		this.setVisible(true);
 		this.repaint();
@@ -29,8 +31,10 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 		objectReSize();
 		*/
 	}
-	liveWPC_create_image_object(String imagepath,int width,int height){//読みこみ時使用
+	liveWPC_create_image_object(String imagepath,int width,int height,liveWPC_proprety_window proprety_window){//読みこみ時使用
 		super();
+
+		setWindow(proprety_window);
 		this.imagepath=imagepath;
 		this.width = width;
 		this.height = height;
@@ -59,13 +63,15 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	public void objectReSize(){
 		this.setSize(width,height);
 		label.setSize(width, height);
+		System.out.println(this.getWidth());
 		label.setSize(width,height);
 		repaint();
 	}
 
 	@Override
 	public void onClickObject(boolean setEnable){
-		liveWPC_proprety_window.get_select_object(this,0);
+		//liveWPC_proprety_window.get_select_object(this,0);
+		getWindow().get_select_object(this,0);
 		super.onClickObject(setEnable);
 	}
 	@Override
@@ -99,6 +105,7 @@ public class liveWPC_create_image_object extends liveWPC_create_object{
 	public void setColor(Color color) {
 		this.color=color;
 	}
+
 
 
 
