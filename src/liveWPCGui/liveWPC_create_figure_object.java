@@ -12,8 +12,9 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	private String Selectfigure;
 	private Graphics2D g2d;
 	private Color color;
-	liveWPC_create_figure_object(String figure_type){
+	liveWPC_create_figure_object(String figure_type,liveWPC_proprety_window proprety_window){
 		super();
+		setWindow(proprety_window);
 		Selectfigure = figure_type;
 		width = 50;
 		height = 50;
@@ -56,7 +57,7 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 
 	@Override
 	public void onClickObject(boolean setEnable){
-		liveWPC_proprety_window.get_select_object(this,0);
+		getWindow().get_select_object(this,0);
 		super.onClickObject(setEnable);
 	}
 

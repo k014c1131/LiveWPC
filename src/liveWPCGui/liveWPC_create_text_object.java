@@ -2,6 +2,7 @@ package liveWPCGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
@@ -9,11 +10,11 @@ import javax.swing.border.LineBorder;
 public class liveWPC_create_text_object extends liveWPC_object_animation{
 
 	private JTextArea textf= new JTextArea();
-	private liveWPC_proprety_window proprety_window;
 
 	public liveWPC_create_text_object(liveWPC_proprety_window proprety_window){
 		super();
 
+		setWindow(proprety_window);
 		LineBorder border = new LineBorder(Color.black);
 		textf.setBorder(border);//選択範囲の確認用
 
@@ -36,13 +37,16 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 				BorderLayout.CENTER);
 
 	}
-	public liveWPC_create_text_object(int width,int height,String text){
+	public liveWPC_create_text_object(int width,int height,String text,liveWPC_proprety_window proprety_window){
 		super();
 
+
+		setWindow(proprety_window);
 		LineBorder border = new LineBorder(Color.black);
 		textf.setBorder(border);//選択範囲の確認用
 
 		textf.setSize(width, height);
+		this.setSize(width, height);
 		MyMouseListener listener = new MyMouseListener();
 		textf.addMouseListener(listener);
 		textf.addMouseMotionListener(listener);
@@ -56,6 +60,11 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 		this.add(
 				textf,
 				BorderLayout.CENTER);
+		textf.setFont(new Font("ゴシック", 3,12));
+
+		this.width=width;
+		this.height=height;
+		objectReSize();
 
 	}
 	@Override
@@ -75,7 +84,7 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 			repaint();
 			enableinfo = false;
 		}
-		liveWPC_proprety_window.get_select_object(this,0);
+		getWindow().get_select_object(this,0);
 		super.onClickObject(setEnable);
 	}
 
@@ -126,6 +135,9 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 	public void setColor(Color color) {
 		this.textf.setForeground(color);
 
+	}
+	public void setFontType(Font f){
+		textf.setFont(f);
 	}
 
 }
