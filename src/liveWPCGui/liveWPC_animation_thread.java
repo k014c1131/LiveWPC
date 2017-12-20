@@ -16,17 +16,19 @@ package liveWPCGui;
 */
 
 public class liveWPC_animation_thread extends Thread {
-        private static int animationtype;
+        private int animationtype;
         private int a_rotate,a_width,a_height,a_alpha,a_x,a_y;
-        private double speed;
+        private long speed;
         private static final int SCROLL = 1000;
         private static final int FADE = 1001;
         private static final int ROTATE = 1002;
         private liveWPC_create_object animationobject;
+
+        //コンストラクタ
         public liveWPC_animation_thread(liveWPC_create_object animationobject,int animationtype,double animationspeed,double firstvalue,double secondvalue){
-            animationtype = liveWPC_animation_thread.animationtype;
-            animationobject = this.animationobject;
-            speed = animationspeed;
+            this.animationtype = animationtype;
+            this.animationobject = animationobject;
+            speed = (long) animationspeed;
             if(animationtype == SCROLL){
                 a_x = (int) firstvalue;
                 a_y = (int) secondvalue;
@@ -41,36 +43,35 @@ public class liveWPC_animation_thread extends Thread {
 
         @Override
         public void run() {
-            if(animationtype == SCROLL){
-                scroll();
+        	if(animationtype == SCROLL){
+            	for(int i = 0;i<a_x && i < a_y;i++){
+                    if(animationobject.x<a_x){
+                        animationobject.x++;
+                    }
+                    if(animationobject.y<a_y){
+                        animationobject.y++;
+                    }
+                    animationobject.repaint();
+                    try {
+                    	Thread.sleep(speed);
+					}catch (InterruptedException e) {
+						// TODO 自動生成された catch ブロック
+						e.printStackTrace();
+					}
+                }
             }else if(animationtype == FADE){
-                fade();
+            	for(int i = 0;i<a_alpha;i++){
+                    animationobject.alpha++;
+            	}
             }else if(animationtype == ROTATE){
-                rotate();
+            	//回転処理
             }
+        	//値の初期化処理
+        	//Todo:stopThreadでやった方がいいかも？
 
         }
-
-        private void scroll(){
-            for(int i = 0;i<a_x && i < a_y;i++){
-                if(animationobject.x<a_x){
-                    animationobject.x++;
-                }
-                if(animationobject.y<a_y){
-                    animationobject.y++;
-                }
-                animationobject.repaint();
-            }
-        }
-        private void fade(){
-            //todo フェード用アニメーション用処理
-
-            animationobject.repaint();
-        }
-        private void rotate(){
-            //todo 回転アニメーション用処理
-
-            animationobject.repaint();
+       //スレッド終了時に呼び出し
+        public void stopThread(){
         }
 
 }

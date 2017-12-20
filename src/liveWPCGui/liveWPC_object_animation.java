@@ -51,8 +51,9 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 
 	//スクロール
 	public void scroll(){
-		animecontroll = new liveWPC_animation_thread(this, 1000, scroll_speed, a_x, a_y);
-		animecontroll.run();
+		int animationtype=1000;
+		animecontroll = new liveWPC_animation_thread(this, animationtype , scroll_speed, a_x, a_y);
+		animecontroll.start();
 	}
 
 	public void set_rotate(int a_rotate){
