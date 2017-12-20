@@ -89,7 +89,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		return list;
 	}
 	public void insert_figure(String figuretype){
-		liveWPC_create_object tc = new liveWPC_create_figure_object(figuretype,proprety_window);
+		liveWPC_object_animation tc = new liveWPC_create_figure_object(figuretype,proprety_window);
 		panel.add(tc);
 		tc.setLocation(50,50);
 		list.add(tc);

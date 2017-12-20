@@ -89,8 +89,10 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	public void setColor(Color color) {
 		// TODO 自動生成されたメソッド・スタブ
 		this.color = color;
-		System.out.println(color);
+
 		this.repaint();
 
 	}
 }
+
+

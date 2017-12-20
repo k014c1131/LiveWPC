@@ -15,13 +15,15 @@ import javax.swing.border.LineBorder;
 public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public boolean enableinfo;
-	protected int x,y;
+	protected int x,y,x_base,y_base;
 	protected int width = -1;
+	protected int width_base = -1;
 	protected int height = -1;
-	protected float alpha;
+	protected int height_base = -1;
+	protected float alpha,alpha_base;
 	protected Color color;
-	protected boolean action;	//アクショントリガーの有無を判別する
-	protected String animename;	//アニメーションの種類
+	protected boolean action;	//アクショントリガーの有無判別する
+	protected String animename;	//アニメーションの種類と時間速度を設定
 	protected int animetime;	//アニメーションの時間を設定
 	protected int animespeed;	//アニメーションの速度を設定
 	protected int layer;
@@ -92,6 +94,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 			//setLocation(x, y);
 			objectReSize();
 			int btn = e.getButton();
+			
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
 				dx = e.getXOnScreen() - getX();
