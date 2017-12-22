@@ -40,13 +40,16 @@ public abstract class liveWPC_create_object  extends JPanel{
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
 		//オブジェクト座標
-		x = 0;
-		y = 0;
+		x_base = 0;
+		x = x_base;
+		y_base = 0;
+		y = y_base;
 		//パネルに追加;
 		this.add(label);
 
 		//透過度
-		alpha = 1;
+		alpha_base = 1;
+		alpha = alpha_base;
 	}
 
 	public abstract void objectReSize();
@@ -81,8 +84,9 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			x = e.getXOnScreen() - dx;
-			y = e.getYOnScreen() - dy;
+			x_base = e.getXOnScreen() - dx;
+			y_base = e.getYOnScreen() - dy;
+			reflect_variables();
 			setLocation(x, y);
 			proprety_window.get_object_size();
 			proprety_window.get_object_point();
@@ -90,10 +94,9 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
-			//setLocation(x, y);
 			objectReSize();
 			int btn = e.getButton();
-			
+
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
 				dx = e.getXOnScreen() - getX();
@@ -120,6 +123,12 @@ public abstract class liveWPC_create_object  extends JPanel{
 	}
 	protected void setFontType(Font f){
 
+	}
+
+	public void reflect_variables(){
+		x 		=	x_base;
+		y 		=	y_base;
+		alpha 	=	alpha_base;
 	}
 
 	/*@Override

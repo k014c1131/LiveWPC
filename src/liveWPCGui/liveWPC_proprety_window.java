@@ -286,8 +286,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		//確認用座標表示
 		//System.out.println(x+ " " +y);
 		objs.get(0).setLocation(x,y);
-		objs.get(0).x = x;
-		objs.get(0).y = y;
+		objs.get(0).x_base = x;
+		objs.get(0).y_base = y;
 	}
 	public void refine_object_point(int changeValue,String xORy){//キー操作で座標変更するメソッド、strでxとyの変更する座標を判断
 		int x = new Integer(object_point_x.getText());
@@ -312,8 +312,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		//確認用座標表示
 		//System.out.println(x+ " " +y);
 		objs.get(0).setLocation(x,y);
-		objs.get(0).x = x;
-		objs.get(0).y = y;
+		objs.get(0).x_base = x;
+		objs.get(0).y_base = y;
 
 		object_point_x.setText(x + "");
 		object_point_y.setText(y + "");

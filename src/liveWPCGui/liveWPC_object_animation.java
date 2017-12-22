@@ -20,7 +20,7 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 		//スクロール用
 		a_x 			= 100;
 		a_y 			= 100;
-		scroll_speed	= 15;
+		scroll_speed	= 90;	//1~100
 
 		//回転用
 		a_rotate 		= 0;

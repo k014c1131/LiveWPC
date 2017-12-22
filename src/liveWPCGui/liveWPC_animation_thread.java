@@ -28,7 +28,11 @@ public class liveWPC_animation_thread extends Thread {
         public liveWPC_animation_thread(liveWPC_create_object animationobject,int animationtype,double animationspeed,double firstvalue,double secondvalue){
             this.animationtype = animationtype;
             this.animationobject = animationobject;
-            speed = (long) animationspeed;
+            long tmp = (long) (100 - animationspeed);
+            if(tmp <= 0){
+            	tmp = 1;
+            }
+            speed =tmp;
             if(animationtype == SCROLL){
                 a_x = (int) firstvalue;
                 a_y = (int) secondvalue;
@@ -45,10 +49,11 @@ public class liveWPC_animation_thread extends Thread {
         public void run() {
         	if(animationtype == SCROLL){
             	for(int i = 0;i<a_x && i < a_y;i++){
-                    if(animationobject.x<a_x){
+                    if(animationobject.x_base+i<animationobject.x_base+a_x){
+
                         animationobject.x++;
                     }
-                    if(animationobject.y<a_y){
+                    if(animationobject.y_base+i<animationobject.y_base+a_y){
                         animationobject.y++;
                     }
                     animationobject.repaint();
@@ -68,7 +73,8 @@ public class liveWPC_animation_thread extends Thread {
             }
         	//値の初期化処理
         	//Todo:stopThreadでやった方がいいかも？
-
+        	animationobject.reflect_variables();
+        	animationobject.repaint();
         }
        //スレッド終了時に呼び出し
         public void stopThread(){
