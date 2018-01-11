@@ -72,10 +72,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
 						toolpanel.removeAll();//ツールバーの中身を削除
-						ToolIconAdd("img/en.png");//ツールバーのアイコンを変更ここから
-						ToolIconAdd("img/shikaku.png");
-						ToolIconAdd("img/chouhoukei.png");
-						ToolIconAdd("img/sankaku.png");//		アイコンを変更ここまで
+						ToolIconAdd("img/en.png","Circle");//ツールバーのアイコンを変更ここから
+						ToolIconAdd("img/shikaku.png","Rectangle");
+						//ToolIconAdd("img/chouhoukei.png");
+						//ToolIconAdd("img/sankaku.png");//		アイコンを変更ここまで
 
 						toolpanel.revalidate();//ツール一覧の表示を更新
 						repaint();			//ツール画面全体を再描画
@@ -121,10 +121,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			toolpanel.setVisible(true);
 			toolpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-			ToolIconAdd("img/en.png");//初期表示のアイコン設定
-			ToolIconAdd("img/shikaku.png");
-			ToolIconAdd("img/chouhoukei.png");
-			ToolIconAdd("img/sankaku.png");
+			ToolIconAdd("img/en.png","Circle");//初期表示のアイコン設定
+			ToolIconAdd("img/shikaku.png","Rectangle");
+			//ToolIconAdd("img/chouhoukei.png");
+			//ToolIconAdd("img/sankaku.png");
 
 		layerpanel= new JPanel();
 			layerpanel.setPreferredSize(new Dimension(160,200));
@@ -195,7 +195,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 		return bt;
 	}
 
-	public void ToolIconAdd(String str){//ツールパネルにボタンを追加するメソッド
+	public void ToolIconAdd(String str,String figure){//ツールパネルにボタンを追加するメソッド
 		icon =		imageResize(str);
 		button =	new JButton(icon);
 		button =	setButtonSize(button);
@@ -203,7 +203,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				new ActionListener(){
 					public void actionPerformed(ActionEvent event){
 						//main_window.insert_image(str);
-						main_window.insert_figure("Circle");
+						main_window.insert_figure(figure);
 					}
 				}
 				);									 //ここまで
@@ -229,10 +229,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 
 		if(e.getSource()==imagebutton){						//画像挿入のメソッド
 			JFileChooser filechooser=	new JFileChooser();
+
 				int selected = filechooser.showOpenDialog(this);
 				if(selected==JFileChooser.APPROVE_OPTION){
 					file=				filechooser.getSelectedFile();//画像のファイルパスを取得
-
 					try{
 						copyFile(file,new File("img/"+file.getName()));
 
@@ -284,7 +284,10 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 					tw.saveFile(file);
 					}
 			}
-		if(e.getSource()==loadbutton){							//設定ファイルの読み込みメソッド
+		/*
+		 * 設定ファイルの読み込みメソッド
+		 * */
+		if(e.getSource()==loadbutton){
 			JFileChooser filechooser=	new JFileChooser();
 			int selected = filechooser.showOpenDialog(this);
 			if(selected==JFileChooser.APPROVE_OPTION){
@@ -293,10 +296,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 				System.out.println(file.getParent()+" "+file.getName());
 				try{
 					String json = tw.readfile(file.getPath(), file.getParent());
-					System.out.println(json);
 					main_window.removeAllObject();
-
-					//String json = "{\"enableinfo\":true,\"x\":337,\"y\":60,\"imagepath\":\"img/chouhoukei.png\",\"icon\":null}";
 
 
 					ObjectMapper mapper = new ObjectMapper();
@@ -312,6 +312,9 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 							break;
 						case "TextArea":
 							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString(),line.getLayer());
+							break;
+						case "Figure":
+							main_window.insert_figure("Circle");
 							break;
 						}
 
