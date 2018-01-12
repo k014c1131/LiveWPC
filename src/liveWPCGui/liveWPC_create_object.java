@@ -2,6 +2,7 @@ package liveWPCGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -129,6 +130,12 @@ public abstract class liveWPC_create_object  extends JPanel{
 		x 		=	x_base;
 		y 		=	y_base;
 		alpha 	=	alpha_base;
+	}
+	public Component getTextArea() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+	public void setTextAreaFocus(boolean b){
 	}
 
 	/*@Override

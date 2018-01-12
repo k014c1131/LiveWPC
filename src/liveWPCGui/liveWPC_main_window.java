@@ -79,6 +79,15 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		tc.setLocation(50,50);
 		tc.reflect_variables();
 		list.add(tc);
+		panel.repaint();
+
+	}
+	public void insert_figure(String figuretype,int width,int height){
+		liveWPC_create_object tc = new liveWPC_create_figure_object(figuretype,proprety_window, width, height);
+		panel.add(tc);
+		tc.setLocation(50,50);
+		list.add(tc);
+		panel.repaint();
 
 	}
 	public void removeAllObject(){
@@ -107,14 +116,17 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		tc.setLocation(50, 50);
 		tc.setLayer(layer);
 		list.add(tc);
+		panel.repaint();
 	}
 	public void setPanel(liveWPC_create_object tc,int x,int y,int layer){
+
 		panel.add(tc);
 		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, layer);
 		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
 		tc.setLocation(x, y);
 		tc.setLayer(layer);
 		list.add(tc);
+		panel.repaint();
 	}
 	//レイヤーの値を設定する
 	public void Sort(){

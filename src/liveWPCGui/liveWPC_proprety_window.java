@@ -44,6 +44,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private JComboBox trigger;
 	private JLabel applabel;
 	private JCheckBox appcheckbox;
+	private JButton animeplaybackbutton;
 	//private JLabel animespeedlabel;
 	private JTextField animespeedtextbox;
 	//private JLabel animetimelabel;
@@ -59,16 +60,23 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	private JTextField object_point_y;
 	private int object_type_number;
 
+	private JTextField object_animation_x;
+	private JTextField object_animation_y;
+	private JTextField object_animation_fade;
+	private JTextField object_animation_angle;
+
 	private liveWPC_tool_window tool_window;
 	private liveWPC_main_window main_window;
 
 	public List <liveWPC_create_object> objs;//選択しているオブジェクトを格納
+	public List <liveWPC_create_object> copyobjs;//コピーしたオブジェクトを格納
 
 	private final static int TEXTOBJECTNUMBER = 0;
 
 
 	liveWPC_proprety_window(){
 		objs = new ArrayList <liveWPC_create_object>();
+		copyobjs = new ArrayList <liveWPC_create_object>();
 		object_type_number =1;
 		object_height = new JTextField("100");
 		object_width = new JTextField("100");
@@ -77,6 +85,11 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		object_alpha_value = new JTextField("100");;
 		object_animation_time = new JTextField("100");
 		object_animation_speed = new JTextField("100");
+		object_animation_x = new JTextField("100");
+		object_animation_y = new JTextField("100");
+		object_animation_fade = new JTextField("100");
+		object_animation_angle = new JTextField("100");
+
 		call_proprety_window(1);
 		//エンター押下字の処理を追加 ↓例
 		//object_height.addAncestorListener(null);
@@ -150,12 +163,15 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 
 		appcheckbox = new JCheckBox();
 		appcheckbox.setPreferredSize(new Dimension(20, 20));
-		applabel.add(appcheckbox);
+
+		animeplaybackbutton=new JButton("再生");//アニメ再生ボタンの設定
+		animeplaybackbutton.setPreferredSize(new Dimension(60, 20));
 
 
 		p6.setPreferredSize(new Dimension(200, 30));
 		p6.add(applabel,BorderLayout.LINE_START);
 		p6.add(appcheckbox,BorderLayout.LINE_END);
+		p6.add(animeplaybackbutton,BorderLayout.LINE_END);
 
 		JPanel p7 = new JPanel();
 
@@ -182,6 +198,17 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 			p9.add(animemotionlabel);
 			p9.add(animemotion);
 
+		JPanel p10 = new JPanel();
+			p10.setPreferredSize(new Dimension(200, 90));
+			p10.add(create_textbox("移動先x座標：",object_animation_x),BorderLayout.LINE_START);
+			p10.add(create_textbox("移動先y座標：",object_animation_y),BorderLayout.LINE_START);
+
+			JPanel p11 = new JPanel();
+			p11.setPreferredSize(new Dimension(200, 90));
+			p11.add(create_textbox("アニメ透過度：",object_animation_fade),BorderLayout.LINE_START);
+			p11.add(create_textbox("アニメ回転角：",object_animation_angle),BorderLayout.LINE_START);
+
+
 	getContentPane().add(p);
 	getContentPane().add(p3);
 	getContentPane().add(p5);
@@ -189,8 +216,10 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	getContentPane().add(p7);
 	getContentPane().add(p8);
 	getContentPane().add(p9);
+	getContentPane().add(p10);
+	getContentPane().add(p11);
 
-	setBounds(50,100,220,450);
+	setBounds(50,50,220,650);//ウィンドウのサイズ指定
 	setResizable(false);
 
 
@@ -235,6 +264,19 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		font.setEnabled(Enabled);
 	}
 
+	public void change_animetion_x(boolean Enabled){
+		object_animation_x.setEnabled(Enabled);
+	}
+	public void change_animetion_y(boolean Enabled){
+		object_animation_y.setEnabled(Enabled);
+	}
+	public void change_animetion_fade(boolean Enabled){
+		object_animation_fade.setEnabled(Enabled);
+	}
+	public void change_animetion_angle(boolean Enabled){
+		object_animation_angle.setEnabled(Enabled);
+	}
+
 
 	public JPanel create_textbox(String str,JTextField jtf){//文字列からテキストフィールドとラベルの組み合わせたパーツを作るメソッド
 		JLabel label = new JLabel(str);
@@ -242,6 +284,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		textbox.setHorizontalAlignment(JTextField.CENTER);
 	 	textbox.setPreferredSize(new Dimension(40, 30));
 	 	JPanel p =new JPanel();
+
 	 	p.add(label,BorderLayout.LINE_START);
 		p.add(textbox,BorderLayout.LINE_START);
 	 	return p;
@@ -266,6 +309,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		objs.get(0).width = width;
 		objs.get(0).height = height;
 		objs.get(0).objectReSize();
+		main_window.repaint();
 	}
 
 	/*
@@ -326,11 +370,14 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		if(objs.size() != 0){
 			if(!objs.get(0).equals(obj)){
 				objs.get(0).onClickObject(true);
+				main_window.repaint();
 			}
 			objs.clear();
 		}
 		switch (obj.getObjectType()){
 		case "figure":
+			change_text_size_box(false);
+			change_font_type_box(false);
 		case "image":
 			change_text_size_box(false);
 			change_font_type_box(false);
@@ -386,13 +433,12 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 		}
 		objs.get(0).alpha = alpha_value;
 		objs.get(0).refinealpha();
-		repaint();
+		main_window.repaint();
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("イベント発生"
-				+ e.getSource());
+
 
 		if(e.getSource() == object_point_x || e.getSource() == object_point_y){
 			refine_object_point();
@@ -412,7 +458,8 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 				if(objs.size()>0){
 					switch(objs.get(0).getObjectType()){
 					case "text":
-						objs.get(0).setColor(color);;
+						System.out.println("通過チェックtext");
+						objs.get(0).setColor(color);
 						break;
 					case "figure":
 						System.out.println("通過チェック");
@@ -421,6 +468,7 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 					case "image":
 						break;
 					}
+					main_window.repaint();
 				}
 			}
 		}
@@ -432,10 +480,55 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode()==KeyEvent.VK_UP){
+			refine_object_point(-1,"y");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_DOWN){
+			refine_object_point(1,"y");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_LEFT){
+			refine_object_point(-1,"x");
+		}
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+			refine_object_point(1,"x");
+		}
 
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
+
+		if(e.getModifiers() == KeyEvent.SHIFT_MASK && e.getKeyCode() == KeyEvent.VK_ENTER){
+			System.out.println("SHIFT+ENTER：テキストフィールドに改行を追加");
+			}
+
+		if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_Z){
+			System.out.println("Ctrl+Z：操作をひとつ戻す");
+			}
+		if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_C){
+
+
+			if(copyobjs.size() != 0){
+				copyobjs.clear();
+			}
+			if(objs.size() != 0){
+				copyobjs.add(objs.get(0));
+				System.out.println("Ctrl+C：選択中のオブジェクトをコピー領域に保存");
+			}
+
+			/*tool_window.setLayer(obj);
+			object_type_number = object_type;*/
+			 //get_object_size();
+			}
+
+		if(e.getModifiers() == KeyEvent.CTRL_MASK && e.getKeyCode() == KeyEvent.VK_V){
+				if(copyobjs.size() != 0){
+					System.out.println("Ctrl+V：保存領域にあるオブジェクトをメイン画面に追加");
+					if(objs.size()>0){
+						this.copyInsert(copyobjs.get(0).getObjectType());
+					}
+				}
+			}
+
 		if(e.getKeyCode() == KeyEvent.VK_DELETE){//選択中のオブジェクトの削除処理(仮)
 			if(objs.size() != 0){
 				main_window.removeObject(objs.remove(0));
@@ -464,24 +557,54 @@ public class liveWPC_proprety_window extends liveWPC_window_base implements live
 	 public void itemStateChanged(ItemEvent e) {
 		//int i = fonttypedata.getIndexOf(fonttypedata.getSelectedItem());
 		if (e.getStateChange() == ItemEvent.SELECTED){
-
-			String data = (String) fonttypedata.getSelectedItem();
-			String data2 = (String) textsizedata.getSelectedItem();
-			if(0<Integer.parseInt(data2)){
-				switch (data){
-				case "ゴシック":
-					objs.get(0).setFontType(new Font("ゴシック", 3,Integer.parseInt(data2)));
-					break;
-				case "明朝":
-					objs.get(0).setFontType(new Font("明朝", 3,Integer.parseInt(data2)));
-					break;
-				case "メイリオ":
-					objs.get(0).setFontType(new Font("メイリオ", 3,Integer.parseInt(data2)));
-					break;
+			if(e.getSource()==font){
+				String data = (String) fonttypedata.getSelectedItem();
+				String data2 = (String) textsizedata.getSelectedItem();
+				if(0<Integer.parseInt(data2)){
+					switch (data){
+					case "ゴシック":
+						objs.get(0).setFontType(new Font("ゴシック", 3,Integer.parseInt(data2)));
+						break;
+					case "明朝":
+						objs.get(0).setFontType(new Font("明朝", 3,Integer.parseInt(data2)));
+						break;
+					case "メイリオ":
+						objs.get(0).setFontType(new Font("メイリオ", 3,Integer.parseInt(data2)));
+						break;
+					}
 				}
+			}
+			if(e.getSource()==animemotion){
+
 			}
 
 		}
+	}
+	public void copyInsert(String objecttype){
+		try{
+			liveWPC_create_object tc;
+			System.out.println(copyobjs.size());
+			switch(objecttype){
+			case "text":
+				tc = new liveWPC_create_text_object(this);
+				liveWPC_create_text_object tmp=(liveWPC_create_text_object) copyobjs.get(0);
+				main_window.insert_text(50,50,tmp.getWidth(),tmp.getHeight(),tmp.getTextArea().getText(),tmp.getLayer());
+				//objs.get(0).setTextAreaFocus(false);
+				break;
+			case "figure":
+				//System.out.println(copyobjs.get(0).getClass());
+				liveWPC_create_figure_object tmp2=(liveWPC_create_figure_object) copyobjs.get(0);
+				main_window.insert_figure(tmp2.getSelectfigure(),tmp2.width,tmp2.height);
+				System.out.println(main_window.hasFocus()+" "+this.hasFocus());
+				//main_window.requestFocus();
+				break;
+			case "image":
+				break;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
 	}
 }
 class IntegerInputVerifier extends InputVerifier {

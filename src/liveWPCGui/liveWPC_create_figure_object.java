@@ -12,12 +12,24 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	private String Selectfigure;
 	private Graphics2D g2d;
 	private Color color;
-	liveWPC_create_figure_object(String figure_type,liveWPC_proprety_window proprety_window){
+
+	public liveWPC_create_figure_object(String figure_type,liveWPC_proprety_window proprety_window){
 		super();
 		setWindow(proprety_window);
 		Selectfigure = figure_type;
 		width = 50;
 		height = 50;
+		color = new Color(1,1,1);
+		this.setVisible(true);
+		this.repaint();
+		this.setSize(1000,1000);
+	}
+	public liveWPC_create_figure_object(String figure_type,liveWPC_proprety_window proprety_window,int width,int height){
+		super();
+		setWindow(proprety_window);
+		Selectfigure = figure_type;
+		this.width = width;
+		this.height = height;
 		color = new Color(1,1,1);
 		this.setVisible(true);
 		this.repaint();
@@ -29,8 +41,7 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 		super.paintComponent(g);
 		g2d = (Graphics2D) g;
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
-
-		switch(Selectfigure){
+			switch(Selectfigure){
 			case Rectangle:
 				//図形四角
 				g2d.setColor(color);
@@ -44,7 +55,8 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 				g2d.fillOval(0,0,width,height);
 				//円を描画
 				break;
-		}
+			}
+
 
 	}
 	@Override
@@ -60,6 +72,9 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 		getWindow().get_select_object(this,0);
 		super.onClickObject(setEnable);
 	}
+	public String getSelectfigure(){//オブジェクトがどの図形を選択しているか取得するために使用
+		return Selectfigure;
+	}
 
 	@Override
 	public String returnValue() {
@@ -71,6 +86,7 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	public void refinealpha() {
 		// TODO 自動生成されたメソッド・スタブ
 		// 透過度の調整
+		this.repaint();
 	}
 	@Override
 	public String getImagePath() {
@@ -82,7 +98,7 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	@Override
 	public String getObjectType() {
 		// TODO 自動生成されたメソッド・スタブ
-		return "fugure";
+		return "figure";
 	}
 
 	@Override
