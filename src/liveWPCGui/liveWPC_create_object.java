@@ -2,6 +2,7 @@ package liveWPCGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -56,7 +57,6 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 	public void onClickObject(boolean setEnable){
 		//重くなるようならLineBorderはプライベート変数に
-		System.out.println(returnValue());
 		if(setEnable ==false){
 			//ボーダーを青くする処理
 			LineBorder border = new LineBorder(Color.blue);
@@ -118,6 +118,13 @@ public abstract class liveWPC_create_object  extends JPanel{
 	}
 	protected void setFontType(Font f){
 
+	}
+
+	public Component getTextArea() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+	public void setTextAreaFocus(boolean b){
 	}
 
 	/*@Override

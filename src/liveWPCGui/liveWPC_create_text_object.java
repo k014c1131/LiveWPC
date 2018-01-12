@@ -35,11 +35,13 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		this.add(
 				textf,
 				BorderLayout.CENTER);
+		textf.setFont(new Font("ゴシック", 3,12));
+
+		objectReSize();
 
 	}
 	public liveWPC_create_text_object(int width,int height,String text,liveWPC_proprety_window proprety_window){
 		super();
-
 
 		setWindow(proprety_window);
 		LineBorder border = new LineBorder(Color.black);
@@ -51,10 +53,6 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		textf.addMouseListener(listener);
 		textf.addMouseMotionListener(listener);
 		textf.setText(text);
-
-		this.setSize(
-				textf.getWidth(),
-				textf.getHeight());
 
 		textf.setVisible(true);
 		this.add(
@@ -94,6 +92,7 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 		this.setSize(
 				textf.getWidth(),
 				textf.getHeight());
+		this.onClickObject(!enableinfo);
 	}
 	public void objectReSize(int x,int y,int width,int height){
 		textf.setSize(width, height);
@@ -138,6 +137,12 @@ public class liveWPC_create_text_object extends liveWPC_create_object{
 	}
 	public void setFontType(Font f){
 		textf.setFont(f);
+	}
+	public  JTextArea getTextArea(){
+		return textf;
+	}
+	public void setTextAreaFocus(boolean b){
+		textf.setFocusable(b);
 	}
 
 }
