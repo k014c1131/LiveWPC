@@ -62,7 +62,9 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 	}
 	//回転
 	public void rotate(){
-
+		int animationtype=1002;
+		animecontroll = new liveWPC_animation_thread(this, animationtype , rotate_speed, a_width, a_height);
+		animecontroll.start();
 	}
 
 	public void set_scale(int a_height, int a_width , double scale_speed){
@@ -74,6 +76,9 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 
 	//遠近
 	public void scale(){
+		int animationtype=1001;
+		animecontroll = new liveWPC_animation_thread(this, animationtype , scall_speed, a_x, a_y);
+		animecontroll.start();
 
 	}
 
@@ -110,13 +115,13 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 	@Override
 	public void setColor(Color color) {
 		// TODO 自動生成されたメソッド・スタブ
+		super.setColor(color);
 
 	}
 	@Override
 	public void onClickObject(boolean setEnable){
-		//super.onClickObject(setEnable);
-		scroll();
-
+		super.onClickObject(setEnable);
+		
 	}
 	@Override
 	public void paint(Graphics g){
