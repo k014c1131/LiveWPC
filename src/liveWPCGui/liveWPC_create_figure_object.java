@@ -41,7 +41,6 @@ public class liveWPC_create_figure_object extends liveWPC_create_object{
 		super.paintComponent(g);
 		g2d = (Graphics2D) g;
 		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha));
-		try{
 			switch(Selectfigure){
 			case Rectangle:
 				//図形四角
@@ -57,9 +56,6 @@ public class liveWPC_create_figure_object extends liveWPC_create_object{
 				//円を描画
 				break;
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
 
 
 	}

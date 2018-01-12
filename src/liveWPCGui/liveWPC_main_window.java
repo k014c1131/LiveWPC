@@ -131,9 +131,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		tc.setLayer(layer);
 		list.add(tc);
 		panel.repaint();
-		/*for(liveWPC_create_object tmp :list){
-			System.out.println("x:"+tmp.getX()+" y:"+tmp.getY());
-		}*/
 	}
 	public void setPanel(liveWPC_create_object tc,int x,int y,int layer){
 
