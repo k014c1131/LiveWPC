@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class liveWPC_create_figure_object extends liveWPC_create_object{
+public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	private final String Rectangle = "Rectangle";
 	private final String Circle = "Circle";
 	private String Selectfigure;
@@ -105,8 +105,10 @@ public class liveWPC_create_figure_object extends liveWPC_create_object{
 	public void setColor(Color color) {
 		// TODO 自動生成されたメソッド・スタブ
 		this.color = color;
-		System.out.println(color);
+
 		this.repaint();
 
 	}
 }
+
+

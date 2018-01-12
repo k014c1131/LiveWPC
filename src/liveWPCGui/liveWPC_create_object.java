@@ -16,13 +16,15 @@ import javax.swing.border.LineBorder;
 public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public boolean enableinfo;
-	protected int x,y;
+	protected int x,y,x_base,y_base;
 	protected int width = -1;
+	protected int width_base = -1;
 	protected int height = -1;
-	protected float alpha;
+	protected int height_base = -1;
+	protected float alpha,alpha_base;
 	protected Color color;
-	protected boolean action;	//アクショントリガーの有無を判別する
-	protected String animename;	//アニメーションの種類
+	protected boolean action;	//アクショントリガーの有無判別する
+	protected String animename;	//アニメーションの種類と時間速度を設定
 	protected int animetime;	//アニメーションの時間を設定
 	protected int animespeed;	//アニメーションの速度を設定
 	protected int layer;
@@ -39,13 +41,16 @@ public abstract class liveWPC_create_object  extends JPanel{
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
 		//オブジェクト座標
-		x = 0;
-		y = 0;
+		x_base = 0;
+		x = x_base;
+		y_base = 0;
+		y = y_base;
 		//パネルに追加;
 		this.add(label);
 
 		//透過度
-		alpha = 1;
+		alpha_base = 1;
+		alpha = alpha_base;
 	}
 
 	public abstract void objectReSize();
@@ -80,8 +85,9 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
-			x = e.getXOnScreen() - dx;
-			y = e.getYOnScreen() - dy;
+			x_base = e.getXOnScreen() - dx;
+			y_base = e.getYOnScreen() - dy;
+			reflect_variables();
 			setLocation(x, y);
 			proprety_window.get_object_size();
 			proprety_window.get_object_point();
@@ -89,9 +95,9 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
-			//setLocation(x, y);
 			objectReSize();
 			int btn = e.getButton();
+
 			if (btn == MouseEvent.BUTTON1){
 				// 押さえたところからラベルの左上の差を取っておく
 				dx = e.getXOnScreen() - getX();
@@ -120,6 +126,11 @@ public abstract class liveWPC_create_object  extends JPanel{
 
 	}
 
+	public void reflect_variables(){
+		x 		=	x_base;
+		y 		=	y_base;
+		alpha 	=	alpha_base;
+	}
 	public Component getTextArea() {
 		// TODO 自動生成されたメソッド・スタブ
 		return null;

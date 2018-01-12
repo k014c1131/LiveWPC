@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class liveWPC_create_image_object extends liveWPC_create_object{
+public class liveWPC_create_image_object extends liveWPC_object_animation{
 	private String imagepath;
 	private BufferedImage image;
 	private Graphics2D g2d;
