@@ -65,6 +65,40 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 		objectReSize();
 
 	}
+	public liveWPC_create_text_object(int width,int height,String text,liveWPC_proprety_window proprety_window
+			,String animename,int a_alpha,double animespeed,double animetime,int a_x,int a_y,int a_rotate
+			,Color color){
+		super();
+
+		setWindow(proprety_window);
+		LineBorder border = new LineBorder(Color.black);
+		textf.setBorder(border);//選択範囲の確認用
+
+		textf.setSize(width, height);
+		this.setSize(width, height);
+		MyMouseListener listener = new MyMouseListener();
+		textf.addMouseListener(listener);
+		textf.addMouseMotionListener(listener);
+		textf.setText(text);
+
+		textf.setVisible(true);
+		this.add(
+				textf,
+				BorderLayout.CENTER);
+		textf.setFont(new Font("ゴシック", 3,12));
+
+		this.width=width;
+		this.height=height;
+		objectReSize();
+		this.setColor(color);
+		this.setAnimeName(animename);
+		this.setAnimeTime(animetime);
+		this.setAnimeSpeed(animespeed);
+		this.setAnimeAlpha(a_alpha);
+		this.setAnimeRotate(a_rotate);
+		this.set_scroll(a_x, a_y);
+
+	}
 	@Override
 	public void onClickObject(boolean setEnable){
 		//このオブジェクトではlabelを使わないためメソッド内容を変更
@@ -104,14 +138,23 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 	@Override
 	public String returnValue() {
 		String str;
-		str =	"{\r\n"+
-				"\"type\":\"TextArea\",\r\n"+
-				"\"x\":"+this.getX()+",\r\n"+
-				"\"y\":"+this.getY()+",\r\n"+
-				"\"width\":"+this.getWidth()+",\r\n"+
-				"\"height\":"+this.getHeight()+",\r\n"+
-				"\"String\":\""+textf.getText()+"\",\r\n"+
-				"\"layer\":"+this.getLayer()+"\r\n"+
+		str =	"{"+
+				"\"type\":\"TextArea\","+
+				"\"x\":"+this.getX()+","+
+				"\"y\":"+this.getY()+","+
+				"\"width\":"+this.getWidth()+","+
+				"\"height\":"+this.getHeight()+","+
+				"\"String\":\""+textf.getText()+"\","+
+				"\"layer\":"+this.getLayer()+","+
+				"\"animename\":\""+this.getAnimeName()+"\","+
+				"\"animealpha\":"+this.getAnimeAlpha()+","+
+				"\"animespeed\":"+this.getAnimeSpeed()+","+
+				"\"animex\":"+this.getAnimeX()+","+
+				"\"animey\":"+this.getAnimeY()+","+
+				"\"animerotate\":"+this.getAnimeRotate()+","+
+				"\"animewidth\":"+this.getAnimeWidth()+","+
+				"\"animeheight\":"+this.getAnimeHeight()+","+
+				"\"color\":"+this.getColor().getRGB()+""+
 				"}";
 
 		return str;
@@ -134,6 +177,9 @@ public class liveWPC_create_text_object extends liveWPC_object_animation{
 	public void setColor(Color color) {
 		this.textf.setForeground(color);
 
+	}
+	public Color getColor(){
+		return this.textf.getForeground();
 	}
 	public void setFontType(Font f){
 		textf.setFont(f);

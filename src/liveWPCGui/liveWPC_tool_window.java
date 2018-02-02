@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -158,7 +159,7 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 			layerpanel.add(scrollpane);
 
 
-			getContentPane().add(toolbar,BorderLayout.CENTER);
+		getContentPane().add(toolbar,BorderLayout.CENTER);
 		getContentPane().add(toolpanel,BorderLayout.SOUTH);
 		getContentPane().add(layerpanel,BorderLayout.SOUTH);
 
@@ -301,20 +302,24 @@ public class liveWPC_tool_window extends liveWPC_window_base implements ActionLi
 
 					ObjectMapper mapper = new ObjectMapper();
 
-					List<liveWPC_text_value> list = mapper.readValue(json, new TypeReference<List<liveWPC_text_value>>() {});
+					ArrayList<liveWPC_text_value> list = mapper.readValue(json, new TypeReference<List<liveWPC_text_value>>() {});
 
 					for(liveWPC_text_value line : list){
-						//System.out.println(line.getX()+" "+line.getY()+" "+line.getWidth()+" "+line.getHeight()+" "+line.getTextString()+line.getImagepath());
-
 						switch (line.getType()){
 						case "Image":
-							main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getLayer());
+							main_window.insert_image(line.getImagepath(),line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getLayer()
+									,line.getAnimeName(),line.getAnimeAlpha(), line.getAnimeSpeed(),line.getAnimeTime(),line.getAnimeX(),line.getAnimeY()
+									,line.getAnimeRotate());
 							break;
 						case "TextArea":
-							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString(),line.getLayer());
+							main_window.insert_text(line.getX(),line.getY(),line.getWidth(),line.getHeight(),line.getTextString(),line.getLayer()
+									,line.getAnimeName(),line.getAnimeAlpha(), line.getAnimeSpeed(),line.getAnimeTime(),line.getAnimeX(),line.getAnimeY()
+									,line.getAnimeRotate(),line.getColor());
 							break;
 						case "Figure":
-							main_window.insert_figure("Circle");
+							main_window.insert_figure(line.getFigure(),line.getX(),line.getY(),line.getWidth(),line.getHeight()
+									,line.getAnimeName(),line.getAnimeAlpha(), line.getAnimeSpeed(),line.getAnimeTime(),line.getAnimeX(),line.getAnimeY()
+									,line.getAnimeRotate(),line.getColor());
 							break;
 						}
 

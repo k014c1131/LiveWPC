@@ -35,6 +35,28 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 		this.repaint();
 		this.setSize(1000,1000);
 	}
+	public liveWPC_create_figure_object(String figure_type,liveWPC_proprety_window proprety_window,int width,int height
+			,String animename,int a_alpha,double animespeed,double animetime,int a_x,int a_y,int a_rotate
+			,Color color){
+		super();
+		setWindow(proprety_window);
+		Selectfigure = figure_type;
+		this.width = width;
+		this.height = height;
+		this.color = color;
+		this.setVisible(true);
+		this.repaint();
+		this.setSize(width, height);
+		this.setAnimeName(animename);
+		this.setAnimeTime(animetime);
+		this.setAnimeSpeed(animespeed);
+		this.setAnimeAlpha(a_alpha);
+		this.setAnimeRotate(a_rotate);
+		this.set_scroll(a_x, a_y);
+		objectReSize();
+
+	}
+
 
 	@Override
 	public void paintComponent(Graphics g) {
@@ -75,12 +97,33 @@ public class liveWPC_create_figure_object extends liveWPC_object_animation{
 	public String getSelectfigure(){//オブジェクトがどの図形を選択しているか取得するために使用
 		return Selectfigure;
 	}
+	public Color getColor(){
+		return color;
+	}
 
 	@Override
 	public String returnValue() {
-		// TODO 自動生成されたメソッド・スタブ
-		// 出力ファイル用:json式でデータを記述
-		return null;
+		String str;
+		str =	"{"+
+				"\"type\":\"Figure\","+
+				"\"x\":"+this.getX()+","+
+				"\"y\":"+this.getY()+","+
+				"\"width\":"+this.getWidth()+","+
+				"\"height\":"+this.getHeight()+","+
+				"\"figuretype\":\""+this.getSelectfigure()+"\","+
+				"\"layer\":"+this.getLayer()+","+
+				"\"animename\":\""+this.getAnimeName()+"\","+
+				"\"animealpha\":"+this.getAnimeAlpha()+","+
+				"\"animespeed\":"+this.getAnimeSpeed()+","+
+				"\"animex\":"+this.getAnimeX()+","+
+				"\"animey\":"+this.getAnimeY()+","+
+				"\"animerotate\":"+this.getAnimeRotate()+","+
+				"\"animewidth\":"+this.getAnimeWidth()+","+
+				"\"animeheight\":"+this.getAnimeHeight()+","+
+				"\"color\":"+this.getColor().getRGB()+""+
+				"}";
+
+		return str;
 	}
 	@Override
 	public void refinealpha() {

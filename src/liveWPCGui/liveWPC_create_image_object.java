@@ -31,6 +31,26 @@ public class liveWPC_create_image_object extends liveWPC_object_animation{
 		objectReSize();
 		*/
 	}
+	liveWPC_create_image_object(String imagepath,int width,int height,liveWPC_proprety_window proprety_window
+			,String animename,int a_alpha,double animespeed,double animetime,int a_x,int a_y,int a_rotate
+			){//読みこみ時使用
+		super();
+
+		setWindow(proprety_window);
+		this.imagepath=imagepath;
+		this.width = width;
+		this.height = height;
+		this.setVisible(true);
+		this.repaint();
+		this.setSize(width,height);
+		this.setAnimeName(animename);
+		this.setAnimeTime(animetime);
+		this.setAnimeSpeed(animespeed);
+		this.setAnimeAlpha(a_alpha);
+		this.setAnimeRotate(a_rotate);
+		this.set_scroll(a_x, a_y);
+		objectReSize();
+	}
 	liveWPC_create_image_object(String imagepath,int width,int height,liveWPC_proprety_window proprety_window){//読みこみ時使用
 		super();
 
@@ -42,6 +62,7 @@ public class liveWPC_create_image_object extends liveWPC_object_animation{
 		this.repaint();
 		objectReSize();
 	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -77,14 +98,22 @@ public class liveWPC_create_image_object extends liveWPC_object_animation{
 	@Override
 	public String returnValue() {//設定値の情報を返すメソッド
 		String str;
-		str =	"{\r\n"+
-				"\"type\":\"Image\",\r\n"+
-				"\"x\":"+this.getX()+",\r\n"+
-				"\"y\":"+this.getY()+",\r\n"+
-				"\"width\":"+this.getWidth()+",\r\n"+
-				"\"height\":"+this.getHeight()+",\r\n"+
-				"\"ImagePath\":\""+this.getImagePath()+"\",\r\n"+
-				"\"layer\":"+this.getLayer()+"\r\n"+
+		str =	"{"+
+				"\"type\":\"Image\","+
+				"\"x\":"+this.getX()+","+
+				"\"y\":"+this.getY()+","+
+				"\"width\":"+this.getWidth()+","+
+				"\"height\":"+this.getHeight()+","+
+				"\"ImagePath\":\""+this.getImagePath()+"\","+
+				"\"layer\":"+this.getLayer()+","+
+				"\"animename\":\""+this.getAnimeName()+"\","+
+				"\"animealpha\":"+this.getAnimeAlpha()+","+
+				"\"animespeed\":"+this.getAnimeSpeed()+","+
+				"\"animex\":"+this.getAnimeX()+","+
+				"\"animey\":"+this.getAnimeY()+","+
+				"\"animerotate\":"+this.getAnimeRotate()+","+
+				"\"animewidth\":"+this.getAnimeWidth()+","+
+				"\"animeheight\":"+this.getAnimeHeight()+""+
 				"}";
 
 		return str;

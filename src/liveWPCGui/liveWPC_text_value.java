@@ -21,9 +21,17 @@ public class liveWPC_text_value {
 	private String animename;	//アニメーションの種類
 	private int animetime;	//アニメーションの時間を設定
 	private int animespeed;	//アニメーションの速度を設定
-
+	private String figuretype;
+	private int animerotate,animewidth,animeheight,animealpha,animex,animey;
+	private int itemindex;
 	@JsonCreator
-	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("ImagePath") String imagepath,@JsonProperty("type") String type,@JsonProperty("String") String textstring,@JsonProperty("layer") int layer){
+	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("ImagePath") String imagepath,@JsonProperty("type") String type,@JsonProperty("String") String textstring,@JsonProperty("layer") int layer
+			,@JsonProperty("figuretype") String figuretype,@JsonProperty("animename") String animename
+			,@JsonProperty("animealpha")int animealpha,@JsonProperty("animespeed")int animespeed
+			,@JsonProperty("animex")int animex,@JsonProperty("animey")int animey
+			,@JsonProperty("animerotate")int animerotate,@JsonProperty("animeawidth")int animewidth
+			,@JsonProperty("animeheight")int animeheight,@JsonProperty("color")Color color
+			,@JsonProperty("itemindex")int itemindex){
 		setX(x);
 		setY(y);
 		setWidth(width);
@@ -32,16 +40,18 @@ public class liveWPC_text_value {
 		setType(type);
 		setTextString(textstring);
 		setLayer(layer);
+		setFigure(figuretype);
+		setAnimeName(animename);
+		setAnimeAlpha(animealpha);
+		setAnimeSpeed(animespeed);
+		setAnimeX(animex);
+		setAnimeY(animey);
+		setAnimeRotate(animerotate);
+		setAnimeWidth(animewidth);
+		setAnimeHeight(animeheight);
+		setItemIndex(itemindex);
+		setColor(color);
 	}
-	/*@JsonCreator
-	public liveWPC_text_value(@JsonProperty("x") int x,@JsonProperty("y") int y,@JsonProperty("width") int width,@JsonProperty("height")int height,@JsonProperty("String") String textstring,@JsonProperty("type") String type){
-		setX(x);
-		setY(y);
-		setWidth(width);
-		setHeight(height);
-		setString(textstring);
-		setType(type);
-	}*/
 
 	public void setX(int x){
 		this.x=x;
@@ -81,6 +91,30 @@ public class liveWPC_text_value {
 	}
 	public void setLayer(int layer){
 		this.layer=layer;
+	}
+	public void setFigure(String figuretype){
+		this.figuretype=figuretype;
+	}
+	public void setAnimeAlpha(int animealpha){
+		this.animealpha=animealpha;
+	}
+	public void setAnimeX(int animex){
+		this.animex=animex;
+	}
+	public void setAnimeY(int animey){
+		this.animey=animey;
+	}
+	public void setAnimeRotate(int animerotate){
+		this.animerotate=animerotate;
+	}
+	public void setAnimeWidth(int animewidth){
+		this.animewidth=animewidth;
+	}
+	public void setAnimeHeight(int animeheight){
+		this.animeheight=animeheight;
+	}
+	public void setItemIndex(int itemindex){
+		this.itemindex=itemindex;
 	}
 
 
@@ -123,6 +157,32 @@ public class liveWPC_text_value {
 	public int getLayer(){
 		return layer;
 	}
+	public String getFigure(){
+		return figuretype;
+	}
+	public int getAnimeAlpha(){
+		return animealpha;
+	}
+	public int getAnimeX(){
+		return animex;
+	}
+	public int getAnimeY(){
+		return animey;
+	}
+	public int getAnimeRotate(){
+		return animerotate;
+	}
+	public int getAnimeWidth(){
+		return animewidth;
+	}
+	public int getAnimeHeight(){
+		return animeheight;
+	}
+	public int getItemIndex(){
+		return itemindex;
+	}
+
+
 
 	public String toString(){
 		return x+" "+y+" "+width+" "+height+" "+imagepath+" "+type+" "+height+" "+textstring;

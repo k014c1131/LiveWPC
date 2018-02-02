@@ -51,19 +51,51 @@ public class liveWPC_main_window extends liveWPC_window_base{
 
 	public  void insert_image(String imagepath){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,proprety_window);
-		setPanel(tc,0);
+		panel.add(tc);
+		tc.setLocation(50,50);
+		list.add(tc);
+		panel.repaint();
 	}
 	public  void insert_image(String imagepath,int x,int y,int width,int height,int layer){
 		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height,proprety_window);
-		setPanel(tc,x,y,layer);
+		panel.add(tc);
+		tc.setLocation(x,y);
+		list.add(tc);
+		panel.repaint();
 	}
+	public  void insert_image(String imagepath,int x,int y,int width,int height,int layer
+			,String animename,int a_alpha, double animespeed,double animetime,int a_x,int a_y,int a_rotate
+			){
+		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height,proprety_window
+				,animename,a_alpha,animespeed,animetime,a_x,a_y,a_rotate
+				);
+		panel.add(tc);
+		tc.setX(x);
+		tc.setY(y);
+		tc.setLocation(x,y);
+		list.add(tc);
+		panel.repaint();
+	}
+	/*public  void insert_image(String imagepath,int x,int y,int width,int height,int layer){
+		liveWPC_create_image_object tc = new liveWPC_create_image_object(imagepath,width,height,proprety_window);
+		setPanel(tc,x,y,layer);
+	}*/
 
 	public  void insert_text(){
 		liveWPC_create_text_object tc = new liveWPC_create_text_object(proprety_window);
-		setPanel(tc,0);
+		setPanel(tc,50,50,0);
 	}
 	public  void insert_text(int x,int y,int width,int height,String text,int layer){
 		liveWPC_create_text_object tc = new liveWPC_create_text_object(width, height, text,proprety_window);
+		setPanel(tc,x,y,layer);
+	}
+	public  void insert_text(int x,int y,int width,int height,String text,int layer
+			,String animename,int a_alpha, double animespeed,double animetime,int a_x,int a_y,int a_rotate,Color color
+			){
+		liveWPC_create_text_object tc = new liveWPC_create_text_object(width, height, text,proprety_window
+				,animename,a_alpha,animespeed,animetime,a_x,a_y,a_rotate,color);
+		tc.setX(x);
+		tc.setY(y);
 		setPanel(tc,x,y,layer);
 	}
 	public ArrayList<liveWPC_create_object> getList(){
@@ -74,7 +106,7 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		return list;
 	}
 	public void insert_figure(String figuretype){
-		liveWPC_object_animation tc = new liveWPC_create_figure_object(figuretype,proprety_window);
+		liveWPC_create_figure_object tc = new liveWPC_create_figure_object(figuretype,proprety_window);
 		panel.add(tc);
 		tc.setLocation(50,50);
 		tc.reflect_variables();
@@ -82,10 +114,22 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		panel.repaint();
 
 	}
-	public void insert_figure(String figuretype,int width,int height){
-		liveWPC_create_object tc = new liveWPC_create_figure_object(figuretype,proprety_window, width, height);
+	public void insert_figure(String figuretype,int x ,int y,int width,int height){
+		liveWPC_create_figure_object tc = new liveWPC_create_figure_object(figuretype,proprety_window, width, height);
 		panel.add(tc);
-		tc.setLocation(50,50);
+		tc.setLocation(x,y);
+		list.add(tc);
+		panel.repaint();
+
+	}
+	public void insert_figure(String figuretype,int x ,int y,int width,int height
+			,String animename,int a_alpha, double animespeed,double animetime,int a_x,int a_y,int a_rotate,Color color){
+		liveWPC_create_figure_object tc = new liveWPC_create_figure_object(figuretype,proprety_window, width, height
+				,animename,a_alpha,animespeed,animetime,a_x,a_y,a_rotate,color);
+		panel.add(tc);
+		tc.setX(x);
+		tc.setY(y);
+		tc.setLocation(x,y);
 		list.add(tc);
 		panel.repaint();
 
@@ -108,15 +152,6 @@ public class liveWPC_main_window extends liveWPC_window_base{
 		}
 	public JLayeredPane getPanel(){
 		return panel;
-	}
-	public void setPanel(liveWPC_create_object tc,int layer){
-		panel.add(tc);
-		panel.setLayer(tc,JLayeredPane.DEFAULT_LAYER, layer);
-		panel.setLayer(border,JLayeredPane.DEFAULT_LAYER, 0);
-		tc.setLocation(50, 50);
-		tc.setLayer(layer);
-		list.add(tc);
-		panel.repaint();
 	}
 	public void setPanel(liveWPC_create_object tc,int x,int y,int layer){
 

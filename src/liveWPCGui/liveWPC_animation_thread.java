@@ -48,9 +48,9 @@ public class liveWPC_animation_thread extends Thread {
         @Override
         public void run() {
         	if(animationtype == SCROLL){
-            	for(int i = 0;i<a_x && i < a_y;i++){
-                    if(animationobject.x_base+i<animationobject.x_base+a_x){
+            	for(int i = 0;i<a_x || i < a_y;i++){
 
+                    if(i<+a_x){
                         animationobject.x++;
                     }
                     if(animationobject.y_base+i<animationobject.y_base+a_y){
@@ -65,15 +65,29 @@ public class liveWPC_animation_thread extends Thread {
 					}
                 }
             }else if(animationtype == FADE){
-            	for(int i = 0;i<a_alpha;i++){
-                    animationobject.alpha++;
+            	if(a_alpha<0){
+            		for(int i = (int) animationobject.alpha;i>a_alpha;i--){
+                        animationobject.alpha--;
+                        animationobject.repaint();
+                    }
+            	}else{
+            		for(int i = (int) animationobject.alpha;i<a_alpha;i++){
+                        animationobject.alpha++;
+                        animationobject.repaint();
+                    }
             	}
+
+            	/*for(int i = 0;i<a_alpha;i++){
+                    animationobject.alpha++;
+                    animationobject.repaint();
+            	}*/
             }else if(animationtype == ROTATE){
             	//回転処理
             }
         	//値の初期化処理
         	//Todo:stopThreadでやった方がいいかも？
         	animationobject.reflect_variables();
+        	animationobject.getWindow().get_object_point();
         	animationobject.repaint();
         }
        //スレッド終了時に呼び出し
