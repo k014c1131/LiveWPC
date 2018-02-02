@@ -8,76 +8,72 @@ import java.awt.Graphics;
 
 public class liveWPC_object_animation extends liveWPC_create_object{
 	private int a_rotate,a_width,a_height,a_alpha,a_x,a_y;
-	private double rotate;
-	private long fade_speed,scroll_speed,scale_speed,rotate_speed;
 	private liveWPC_animation_thread animecontroll;
 	public liveWPC_object_animation(){
+		super();
 		//パラメタの初期化
 		//フェード用
 		a_alpha			= 0;
-		fade_speed		= 10;
 
 		//スクロール用
 		a_x 			= 100;
 		a_y 			= 100;
-		scroll_speed	= 90;	//1~100
 
 		//回転用
 		a_rotate 		= 0;
-		rotate_speed	= 10;
 
 		//スケール(拡縮)用
 		a_width 		= 0;
 		a_height 		= 0;
-		scale_speed		= 10;
 
 	}
 
-	public void set_fade(int a_alpha, double fade_speed){
-		fade_speed	= this.fade_speed;
-
-	}
 
 	//表示 非表示
 	public void fade(){
 
 	}
 
-	public void set_scroll(int a_x,int a_y, double scroll_speed){
-		a_x = this.a_x;
-		a_y = this.a_y;
-		scroll_speed = this.scroll_speed;
+	public void set_scroll(int a_x,int a_y){
+		this.a_x = a_x;
+		this.a_y = a_y;
 	}
 
 	//スクロール
 	public void scroll(){
 		int animationtype=1000;
-		animecontroll = new liveWPC_animation_thread(this, animationtype , scroll_speed, a_x, a_y);
+		if(animecontroll!=null){
+			animecontroll.stopThread();
+			reflect_variables();
+		}
+		animecontroll = new liveWPC_animation_thread(this, animationtype , animespeed, a_x, a_y);
 		animecontroll.start();
-	}
-
-	public void set_rotate(int a_rotate){
-		a_rotate = this.a_rotate;
-
 	}
 	//回転
 	public void rotate(){
 		int animationtype=1002;
-		animecontroll = new liveWPC_animation_thread(this, animationtype , rotate_speed, a_width, a_height);
+		if(animecontroll!=null){
+			animecontroll.stopThread();
+			reflect_variables();
+		}
+		animecontroll = new liveWPC_animation_thread(this, animationtype , animespeed, a_width, a_height);
 		animecontroll.start();
 	}
 
-	public void set_scale(int a_height, int a_width , double scale_speed){
-		a_height 	= this.a_height;
-		a_width 	= this.a_width;
-		scale_speed = this.scale_speed;
+	public void set_scale(int a_height, int a_width){
+		this.a_height 	= a_height;
+		this.a_width 	= a_width;
 
 	}
 
 	//遠近
 	public void scale(){
 		int animationtype=1001;
-		animecontroll = new liveWPC_animation_thread(this, animationtype , scall_speed, a_x, a_y);
+		if(animecontroll!=null){
+			animecontroll.stopThread();
+			reflect_variables();
+		}
+		animecontroll = new liveWPC_animation_thread(this, animationtype , animespeed, a_x, a_y);
 		animecontroll.start();
 
 	}
@@ -115,18 +111,54 @@ public class liveWPC_object_animation extends liveWPC_create_object{
 	@Override
 	public void setColor(Color color) {
 		// TODO 自動生成されたメソッド・スタブ
-		super.setColor(color);
 
 	}
 	@Override
 	public void onClickObject(boolean setEnable){
 		super.onClickObject(setEnable);
-		
+
 	}
 	@Override
 	public void paint(Graphics g){
 		setLocation(x, y);
 		super.paint(g);
+	}
+
+	public int getAnimeAlpha(){
+		return a_alpha;
+	}
+	public void setAnimeAlpha(int alpha){
+		this.a_alpha=alpha;
+	}
+	public int getAnimeX(){
+		return a_x;
+	}
+	public void setAnimeX(int animex){
+		this.a_x=animex;
+	}
+	public int getAnimeY(){
+		return a_y;
+	}
+	public void setAnimeY(int animey){
+		this.a_y=animey;
+	}
+	public int getAnimeRotate(){
+		return a_rotate;
+	}
+	public void setAnimeRotate(int rotate){
+		this.a_rotate=rotate;
+	}
+	public int getAnimeWidth(){
+		return a_width;
+	}
+	public void setAnimeWidth(int width){
+		this.a_width=width;
+	}
+	public int getAnimeHeight(){
+		return a_height;
+	}
+	public void setAnimeHeight(int height){
+		this.a_height=height;
 	}
 
 }

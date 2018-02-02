@@ -16,15 +16,16 @@ import javax.swing.border.LineBorder;
 public abstract class liveWPC_create_object  extends JPanel{
 	public JLabel label;
 	public boolean enableinfo;
-	protected int x,y,x_base,y_base;
+	protected int x,y,x_base,y_base;//xyは現在の値、baseはアニメ再生前の値を保持する
 	protected int width = -1;
 	protected int width_base = -1;
 	protected int height = -1;
 	protected int height_base = -1;
 	protected float alpha,alpha_base;
 	protected Color color;
-	protected boolean action;	//アクショントリガーの有無判別する
-	protected String animename;	//アニメーションの種類と時間速度を設定
+	protected String actionname;//アクショントリガーの種類を保持
+	protected boolean actiontrigger=false;	//アクショントリガーの有無判別する
+	protected String animename="";	//アニメーションの種類を設定
 	protected int animetime;	//アニメーションの時間を設定
 	protected int animespeed;	//アニメーションの速度を設定
 	protected int layer;
@@ -83,6 +84,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 		private int dx;
 		private int dy;
 
+		@Override
 		public void mouseDragged(MouseEvent e) {
 			// マウスの座標からラベルの左上の座標を取得する
 			x_base = e.getXOnScreen() - dx;
@@ -93,6 +95,7 @@ public abstract class liveWPC_create_object  extends JPanel{
 			proprety_window.get_object_point();
 		}
 
+		@Override
 		public void mousePressed(MouseEvent e) {
 			onClickObject(enableinfo);
 			objectReSize();
@@ -108,6 +111,14 @@ public abstract class liveWPC_create_object  extends JPanel{
 		}
 
 	}
+
+	public boolean getAction(){//仮置き
+		return actiontrigger;
+	}
+	public void setAction(boolean actiontrigger){//仮置き
+		this.actiontrigger=actiontrigger;
+	}
+
 	public int getLayer(){//仮置き
 		return layer;
 	}
@@ -136,6 +147,48 @@ public abstract class liveWPC_create_object  extends JPanel{
 		return null;
 	}
 	public void setTextAreaFocus(boolean b){
+	}
+	public void setAnimeName(String animename){
+		this.animename=animename;
+	}
+	public String getAnimeName(){
+		return animename;
+	}
+	@Override
+	public int getX(){
+		return x;
+	}
+	public void setX(int x){
+		x_base= x;
+		this.x=x;
+	}
+
+	@Override
+	public int getY(){
+		return y;
+	}
+	public void setY(int y){
+		y_base= y;
+		this.y=y;
+	}
+	public void setAnimeTime(double animetime){
+		this.animetime=(int) animetime;
+	}
+	public int getAnimeTime(){
+		return animetime;
+	}
+	public void setAnimeSpeed(double animespeed){
+		this.animespeed=(int) animespeed;
+	}
+	public int getAnimeSpeed(){
+		return animespeed;
+	}
+
+	public String getActionName(){
+		return actionname;
+	}
+	public void setActionName(String actionname){
+		this.actionname=actionname;
 	}
 
 	/*@Override
